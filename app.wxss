@@ -1,0 +1,14 @@
+/**app.wxss**/
+@import 'assets/font/DengXian.wxss';
+page {
+    font-family: 'DengXian';
+}
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 200rpx 0;
+    box-sizing: border-box;
+}

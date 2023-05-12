@@ -1,0 +1,64 @@
+page {
+    font-family: 'DengXian';
+    background-color: #e8f2fb;
+}
+.detail {
+    padding-bottom: 10px;
+}
+.header-view {
+    position: sticky;
+    top: 0;
+    padding: 10px 10px 0;
+    background-color: #e8f2fb;
+}
+.header {
+    padding: 10px 0;
+    display: flex;
+    border-radius: 10px;
+    text-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
+}
+.header-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.header-income, .header-pay {
+    flex: 1;
+}
+.header-date {
+    padding: 0 20px 0 10px;
+    text-align: center;
+}
+.header-month, .header-amount {
+    margin-top: 10px;
+    font-size: 18px;
+}
+.header-month {
+    font-size: 20px;
+    font-weight: 600;
+}
+.account {
+    margin: 10px 10px 0;
+    padding: 5px 10px 8px;
+    border-radius: 10px;
+    text-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    box-shadow: inset 1px 1px 2px #d3e0ec, inset -1px -1px 2px #fff;
+}
+.account-header {
+    display: flex;
+    justify-content: space-between;
+}
+.account-item {
+    margin-top: 5px;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+.account-red {
+    color: #ed4014;
+}
+.account-green {
+    color: #19be6b;
+}

@@ -1,12 +1,25 @@
-const formatTime = date => {
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    const second = date.getSeconds()
-
-    return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
+const formatDate = (date, format = 'yyyy-MM-dd') => {
+    if (date) {
+        date = date instanceof Date ? date : new Date(date)
+        const data = {
+            'y+': date.getFullYear(),
+            'M+': date.getMonth() + 1,
+            'd+': date.getDate(),
+            'h+': date.getHours(),
+            'm+': date.getMinutes(),
+            's+': date.getSeconds(),
+            'q+': Math.floor((date.getMonth() + 3) / 3),
+            S: date.getMilliseconds(),
+        }
+        Object.keys(data).forEach((key) => {
+            format = format.replace(new RegExp(key), match => {
+                const str = `0${data[key]}`
+                return str.substring(str.length - match.length)
+            })
+        })
+        return format
+    }
+    return ''
 }
 
 const formatNumber = n => {
@@ -15,5 +28,5 @@ const formatNumber = n => {
 }
 
 module.exports = {
-    formatTime
+    formatDate
 }

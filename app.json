@@ -1,8 +1,8 @@
 {
     "pages": [
         "pages/detail/detail",
-        "pages/index/index",
-        "pages/logs/logs"
+        "pages/accounting/accounting",
+        "pages/trend/trend"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -11,12 +11,16 @@
         "navigationBarTextStyle": "black"
     },
     "tabBar": {
+        "custom": true,
         "list": [{
             "pagePath": "pages/detail/detail",
             "text": "明细"
         }, {
-            "pagePath": "pages/index/index",
-            "text": "首页"
+            "pagePath": "pages/accounting/accounting",
+            "text": "记账"
+        }, {
+            "pagePath": "pages/trend/trend",
+            "text": "趋势"
         }]
     },
     "style": "v2",

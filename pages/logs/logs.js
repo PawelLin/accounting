@@ -9,7 +9,7 @@ Page({
         this.setData({
             logs: (wx.getStorageSync('logs') || []).map(log => {
                 return {
-                    date: util.formatTime(new Date(log)),
+                    date: util.formatDate(new Date(log), 'yyyy-MM-dd hh:mm:ss'),
                     timeStamp: log
                 }
             })

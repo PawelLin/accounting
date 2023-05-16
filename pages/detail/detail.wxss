@@ -1,9 +1,5 @@
-page {
-    font-family: 'DengXian';
-    background-color: #e8f2fb;
-}
 .detail {
-    padding-bottom: 10px;
+    padding-bottom: 58px;
 }
 .header-view {
     position: sticky;
@@ -40,9 +36,12 @@ page {
 }
 .account {
     margin: 10px 10px 0;
-    padding: 5px 10px 8px;
+    padding: 8px 10px;
     border-radius: 10px;
     text-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
+}
+.account.current {
     box-shadow: inset 1px 1px 2px #d3e0ec, inset -1px -1px 2px #fff;
 }
 .account-header {

@@ -1,10 +1,12 @@
 <view class="detail">
     <view class="header-view">
         <view class="header">
-            <view class="header-item header-date">
-                <view class="header-title">2023年</view>
-                <view class="header-month">05月</view>
-            </view>
+            <picker value="{{pickData.date}}" mode="date" fields="month" bindchange="bindPickDataChange">
+                <view class="header-item header-date">
+                    <view class="header-title">{{pickData.year}}年</view>
+                    <view class="header-month">{{pickData.month}}月</view>
+                </view>
+            </picker>
             <view class="header-item header-income">
                 <view class="header-title">收入</view>
                 <view class="header-amount account-red">123456789.99</view>
@@ -15,7 +17,7 @@
             </view>
         </view>
     </view>
-    <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i" wx:key="i" class="account">
+    <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i" wx:key="i" class="account {{!index ? 'current' : ''}}">
         <view class="account-header">
             <view>05月{{i}}日 星期三</view>
             <view>支出: -13.30</view>

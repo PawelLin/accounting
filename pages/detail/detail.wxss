@@ -38,7 +38,7 @@
     margin: 10px 10px 0;
     padding: 8px 10px;
     border-radius: 10px;
-    text-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    text-shadow: var(--soft-text-shadow);
     box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
 }
 .account.current {

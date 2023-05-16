@@ -1,11 +1,11 @@
-<view>
+<view class="accounting">
     <form>
         <view class="type">
-            <view class="type-item">支出</view>
-            <view class="type-item">收入</view>
+            <view wx:for="{{typeList}}" wx:key="key" data-key="{{item.key}}" bindtap="typeChange" class="type-item {{item.key === type ? 'active' : ''}}">{{item.title}}</view>
         </view>
         <view class="label">
-            <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i" wx:key="i" class="label-item">标签{{i}}</view>
+            <view wx:for="{{labelList}}" wx:key="key" data-key="{{item.key}}" bindtap="labelChange"
+            class="label-item {{item.key === label ? 'active' : ''}}">{{item.title}}</view>
         </view>
     </form>
 </view>

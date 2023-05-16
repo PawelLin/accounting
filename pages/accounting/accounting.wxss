@@ -1,3 +1,6 @@
+.accounting {
+    text-shadow: var(--soft-text-shadow);
+}
 .type {
     margin-top: 10px;
     display: flex;
@@ -8,28 +11,32 @@
     justify-content: center;
     align-items: center;
     width: 84px;
-    height: 28px;
+    height: 32px;
     box-shadow: var(--soft-box-shadow);
+}
+.type-item.active {
+    box-shadow: var(--soft-box-shadow-inset);
 }
 .type-item:first-child {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    box-shadow: var(--soft-box-shadow-inset);
 }
 .type-item:last-child {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 .label {
-    /* display: inline-block; */
 }
 .label-item {
     margin: 10px 0 0 10px;
+    padding: 4px 5px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 30px;
+    min-width: 50px;
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
+}
+.label-item.active {
+    box-shadow: var(--soft-box-shadow-inset);
 }

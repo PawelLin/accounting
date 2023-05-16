@@ -9,11 +9,11 @@
             </picker>
             <view class="header-item header-income">
                 <view class="header-title">收入</view>
-                <view class="header-amount account-red">123456789.99</view>
+                <view class="header-amount account-red">1234567.89</view>
             </view>
             <view class="header-item header-pay">
                 <view class="header-title">支出</view>
-                <view class="header-amount account-green">123456789.99</view>
+                <view class="header-amount account-green">1234567.89</view>
             </view>
         </view>
     </view>

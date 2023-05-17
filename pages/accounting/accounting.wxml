@@ -1,11 +1,44 @@
 <view class="accounting">
-    <form>
+    <!-- <form> -->
         <view class="type">
             <view wx:for="{{typeList}}" wx:key="key" data-key="{{item.key}}" bindtap="typeChange" class="type-item {{item.key === type ? 'active' : ''}}">{{item.title}}</view>
         </view>
         <view class="label">
-            <view wx:for="{{labelList}}" wx:key="key" data-key="{{item.key}}" bindtap="labelChange"
-            class="label-item {{item.key === label ? 'active' : ''}}">{{item.title}}</view>
+            <scroll-view scroll-y="true" class="label-scroll">
+                <view class="label-item label-custom {{'custom' === label ? 'active' : ''}}" data-key="custom" bindtap="labelChange">
+                    <input value="{{customLabel}}" data-key="customLabel" bindinput="bindInput" type="text" placeholder="自定义标签" maxlength="5" />
+                </view>
+                <view wx:for="{{labelList}}" wx:key="key" data-key="{{item.key}}" bindtap="labelChange"
+                class="label-item {{item.key === label ? 'active' : ''}}">{{item.title}}</view>
+                <view class="label-space"></view>
+            </scroll-view>
         </view>
-    </form>
+        <view class="keyboard">
+            <view class="amount">{{amount}}</view>
+            <view class="remark">
+                <label for="remark">备注</label>
+                <input value="{{remark}}" data-key="remark" bindinput="bindInput" id="remark" class="remark-input" type="text" placeholder="点击填写备注" maxlength="10" />
+            </view>
+            <view class="button-contain">
+                <view class="button button-number" data-key="7" bindtap="bindNumberTap">7</view>
+                <view class="button button-number" data-key="8" bindtap="bindNumberTap">8</view>
+                <view class="button button-number" data-key="9" bindtap="bindNumberTap">9</view>
+                <picker class="button {{date !== today ? 'button-date' : ''}}" value="{{date}}" mode="date" bindchange="bindDataChange">
+                    {{date === today ? '今天' : date}}
+                </picker>
+                <view class="button button-number" data-key="4" bindtap="bindNumberTap">4</view>
+                <view class="button button-number" data-key="5" bindtap="bindNumberTap">5</view>
+                <view class="button button-number" data-key="6" bindtap="bindNumberTap">6</view>
+                <view class="button button-number" data-key="+" bindtap="bindCalcTap">+</view>
+                <view class="button button-number" data-key="1" bindtap="bindNumberTap">1</view>
+                <view class="button button-number" data-key="2" bindtap="bindNumberTap">2</view>
+                <view class="button button-number" data-key="3" bindtap="bindNumberTap">3</view>
+                <view class="button button-number" data-key="-" bindtap="bindCalcTap">-</view>
+                <view class="button button-number" data-key="." bindtap="bindPointTap">.</view>
+                <view class="button button-number" data-key="0" bindtap="bindNumberTap">0</view>
+                <view class="button" bindtap="bindDeleteTap">删除</view>
+                <view class="button {{isEqual ? 'button-number' : '' }}" bindtap="bindCompleteTap">{{isEqual ? '=' : '完成'}}</view>
+            </view>
+        </view>
+    <!-- </form> -->
 </view>

@@ -17,20 +17,25 @@
             </view>
         </view>
     </view>
-    <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i" wx:key="i" class="account {{!index ? 'current' : ''}}">
-        <view class="account-header">
-            <view>05月{{i}}日 星期三</view>
-            <view>支出: -13.30</view>
-        </view>
-        <view class="account-contain">
-            <view class="account-item">
-                <view>餐饮</view>
-                <view class="account-green">-13.31</view>
+    <view class="account-view">
+        <scroll-view class="account-scroll" scroll-y="true">
+            <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i" wx:key="i" class="account {{!index ? 'current' : ''}}">
+                <view class="account-header">
+                    <view>05月{{i}}日 星期三</view>
+                    <view>支出: -13.30</view>
+                </view>
+                <view class="account-contain">
+                    <view class="account-item">
+                        <view>餐饮</view>
+                        <view class="account-green">-13.31</view>
+                    </view>
+                    <view class="account-item">
+                        <view>收入</view>
+                        <view class="account-red">+0.01</view>
+                    </view>
+                </view>
             </view>
-            <view class="account-item">
-                <view>收入</view>
-                <view class="account-red">+0.01</view>
-            </view>
-        </view>
+            <view class="scroll-space"></view>
+        </scroll-view>
     </view>
 </view>

@@ -1,11 +1,15 @@
+page {
+    height: 100%;
+}
 .detail {
-    padding-bottom: 58px;
+    height: 100%;
+    padding: 10px 0 calc(env(safe-area-inset-bottom) + 48px);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 .header-view {
-    position: sticky;
-    top: 0;
-    padding: 10px 10px 0;
-    background-color: #e8f2fb;
+    padding: 0 10px;
 }
 .header {
     padding: 10px 0;
@@ -33,6 +37,13 @@
 .header-month {
     font-size: 20px;
     font-weight: 600;
+}
+.account-view {
+    flex: 1;
+    overflow-y: hidden;
+}
+.account-scroll {
+    height: 100%;
 }
 .account {
     margin: 10px 10px 0;

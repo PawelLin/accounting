@@ -21,12 +21,16 @@ const formatDate = (date, format = 'yyyy-MM-dd') => {
     }
     return ''
 }
-
-const formatNumber = n => {
-    n = n.toString()
-    return n[1] ? n : `0${n}`
+const formatAmount = (value, decimalPlaces) => {
+    if (!value && value !== 0) return ''
+    const number = Number(value)
+    if (isNaN(number)) return ''
+    const numberStr = decimalPlaces || decimalPlaces === 0 ? number.toFixed(decimalPlaces) : number.toString()
+    const [integer, decimal = ''] = numberStr.split('.')
+    return integer.replace(/\B(?=((?:\d{3})+(?!\d)))/g, ',') + (decimal && `.${decimal}`)
 }
 
 module.exports = {
-    formatDate
+    formatDate,
+    formatAmount
 }

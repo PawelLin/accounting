@@ -9,30 +9,26 @@
             </picker>
             <view class="header-item header-income">
                 <view class="header-title">收入</view>
-                <view class="header-amount account-red">1234567.89</view>
+                <view class="header-amount account-red">{{incomeNumber}}</view>
             </view>
             <view class="header-item header-pay">
                 <view class="header-title">支出</view>
-                <view class="header-amount account-green">1234567.89</view>
+                <view class="header-amount account-green">{{payNumber}}</view>
             </view>
         </view>
     </view>
     <view class="account-view">
         <scroll-view class="account-scroll" scroll-y="true">
-            <!-- <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i" wx:key="i" class="account {{!index ? 'current' : ''}}"> -->
-            <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i" wx:key="i" class="account">
+            <view class="scroll-space"></view>
+            <view wx:for="{{list}}" wx:key="key" class="account">
                 <view class="account-header">
-                    <view>05月{{i}}日 星期三</view>
-                    <view>支出: -13.30</view>
+                    <view>{{item.date}} 星期三</view>
+                    <view>{{item.amount < 0 ? '支出' : '收入'}}: {{item.amount}}</view>
                 </view>
                 <view class="account-contain">
-                    <view class="account-item">
-                        <view>餐饮</view>
-                        <view class="account-green">-13.31</view>
-                    </view>
-                    <view class="account-item">
-                        <view>收入</view>
-                        <view class="account-red">+0.01</view>
+                    <view wx:for="{{item.list}}" wx:key="time" class="account-item">
+                        <view>{{item.labelTitle}}</view>
+                        <view class="{{item.amount < 0 ? 'account-green' : 'account-red'}}">{{item.amount}}</view>
                     </view>
                 </view>
             </view>

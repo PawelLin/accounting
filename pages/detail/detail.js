@@ -1,6 +1,9 @@
 const util = require('../../utils/util.js')
 Page({
     data: {
+        list: [],
+        payNumber: '0',
+        incomeNumber: '0',
         pickData: {
             date: '',
             year: '',
@@ -15,8 +18,29 @@ Page({
         this.setData({
             pickData: { date, year, month }
         })
+        this.getData(date)
     },
     getData (key) {
+        util.getStorage(key).then(res => {
+            let payNumber = 0
+            let incomeNumber = 0
+            const result = []
+            const data = res.data || {}
+            Object.keys(data).sort((a, b) => new Date(b) - new Date(a)).forEach(key => {
+                const { pay, income, list } = data[key]
+                const date = util.formatDate(key, 'MM月dd日')
+                const amount = util.numberSubtract(income - pay)
+                result.push({ key, date, amount, list })
+                payNumber = util.numberAddition(payNumber + pay)
+                incomeNumber = util.numberAddition(incomeNumber + income)
+            })
+            console.log(result)
+            this.setData({
+                payNumber: util.formatAmount(payNumber),
+                incomeNumber: util.formatAmount(incomeNumber),
+                list: result
+            })
+        })
     },
     /**
      * 生命周期函数--监听页面加载
@@ -24,7 +48,6 @@ Page({
     onLoad(options) {
         const date = util.formatDate(new Date(), 'yyyy-MM')
         this.setPickData(date)
-        this.getData(date)
     },
     /**
      * 生命周期函数--监听页面初次渲染完成

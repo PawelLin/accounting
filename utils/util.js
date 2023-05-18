@@ -22,15 +22,71 @@ const formatDate = (date, format = 'yyyy-MM-dd') => {
     return ''
 }
 const formatAmount = (value, decimalPlaces) => {
-    if (!value && value !== 0) return ''
+    if (!value && value !== 0) return value
     const number = Number(value)
-    if (isNaN(number)) return ''
+    if (isNaN(number) || number < 1000) return value
     const numberStr = decimalPlaces || decimalPlaces === 0 ? number.toFixed(decimalPlaces) : number.toString()
     const [integer, decimal = ''] = numberStr.split('.')
-    return integer.replace(/\B(?=((?:\d{3})+(?!\d)))/g, ',') + (decimal && `.${decimal}`)
+    const lastCharIsPoint = value.toString().match(/\.$/)
+    return integer.replace(/\B(?=((?:\d{3})+(?!\d)))/g, ',') + (lastCharIsPoint ? '.' : (decimal && `.${decimal}`))
+}
+const calcPrepare = args => {
+    const toFixedMaxlength = args.reduce((length, str = '') => {
+        str = str === 0 ? '0' : `${str || ''}`
+        const index = str.indexOf('.') + 1
+        return Math.max(length, index <= 0 ? 0 : str.length - index)
+    }, 0)
+    const number1 = parseFloat(args[0] || 0) || 0
+    const number2 = parseFloat(args[1] || 0) || 0
+    return [number1, number2, toFixedMaxlength]
+} 
+const numberAddition = (...args) => {
+    const [number1, number2, toFixedMaxlength] = calcPrepare(args)
+    const result = Number(number1  + number2).toFixed(toFixedMaxlength)
+    return parseFloat(result)
+}
+const numberSubtract = (...args) => {
+    const [number1, number2, toFixedMaxlength] = calcPrepare(args)
+    const result = Number(number1 - number2).toFixed(toFixedMaxlength)
+    return parseFloat(result)
+}
+const getStorage = key => {
+    return new Promise(resolve => {
+        wx.getStorage({
+            key,
+            success: (res) => {
+                console.log('get', key, res)
+                resolve(res)
+            },
+            fail (error) {
+                console.log('get', key, error)
+                resolve(error)
+            }
+        })
+    })
+}
+const setStorage = (key, data) => {
+    return new Promise((resolve, reject) => {
+        wx.setStorage({
+            key,
+            data,
+            success: (res) => {
+                console.log('set', key, res)
+                resolve(res)
+            },
+            fail (error) {
+                console.log('set', key, error)
+                reject(error)
+            }
+        })
+    })
 }
 
 module.exports = {
     formatDate,
-    formatAmount
+    formatAmount,
+    numberAddition,
+    numberSubtract,
+    getStorage,
+    setStorage
 }

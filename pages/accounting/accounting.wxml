@@ -6,15 +6,15 @@
         <view class="label">
             <scroll-view scroll-y="true" class="label-scroll">
                 <view class="label-item label-custom {{'custom' === label ? 'active' : ''}}" data-key="custom" bindtap="labelChange">
-                    <input value="{{customLabel}}" data-key="customLabel" bindinput="bindInput" type="text" placeholder="自定义标签" maxlength="5" />
+                    <input value="{{labelCustom}}" data-key="labelCustom" bindinput="bindInput" type="text" placeholder="自定义标签" maxlength="5" />
                 </view>
-                <view wx:for="{{labelList}}" wx:key="key" data-key="{{item.key}}" bindtap="labelChange"
+                <view wx:for="{{labelList}}" wx:key="key" data-key="{{item.key}}" data-title="{{item.title}}" bindtap="labelChange"
                 class="label-item {{item.key === label ? 'active' : ''}}">{{item.title}}</view>
                 <view class="label-space"></view>
             </scroll-view>
         </view>
         <view class="keyboard">
-            <view class="amount">{{amount}}</view>
+            <view class="amount">{{amountFormat}}</view>
             <view class="remark">
                 <label for="remark">备注</label>
                 <input value="{{remark}}" data-key="remark" bindinput="bindInput" id="remark" class="remark-input" type="text" placeholder="点击填写备注" maxlength="10" />
@@ -23,8 +23,8 @@
                 <view class="button button-number" data-key="7" bindtap="bindNumberTap">7</view>
                 <view class="button button-number" data-key="8" bindtap="bindNumberTap">8</view>
                 <view class="button button-number" data-key="9" bindtap="bindNumberTap">9</view>
-                <picker class="button {{date !== today ? 'button-date' : ''}}" value="{{date}}" mode="date" bindchange="bindDataChange">
-                    {{date === today ? '今天' : date}}
+                <picker class="button button-date {{date !== today ? 'not-today' : ''}}" value="{{date}}" mode="date" bindchange="bindDataChange">
+                    <view class="button-date-text">{{date === today ? '今天' : date}}</view>
                 </picker>
                 <view class="button button-number" data-key="4" bindtap="bindNumberTap">4</view>
                 <view class="button button-number" data-key="5" bindtap="bindNumberTap">5</view>

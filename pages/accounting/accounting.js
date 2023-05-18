@@ -38,7 +38,8 @@ Page({
             labelList: this.data.payLabelList
         })
         Promise.all([util.getStorage('payLabelList'), util.getStorage('incomeLabelList')]).then(res => {
-            const [ { data: payLabelList = [] }, { data: incomeLabelList = [] } ] = res
+            const payLabelList = res[0].data || []
+            const incomeLabelList = res[1].data || []
             const labelList = this.data.type === '0' ? payLabelList : incomeLabelList
             this.setData({
                 payLabelList,
@@ -121,7 +122,8 @@ Page({
         try {
             let { type, label, labelTitle, labelCustom, amount, remark, date } = this.data
             const dateKey = date.replace(/-\d+$/, '')
-            const { data: dateData = {} } = await util.getStorage(dateKey)
+            const { data } = await util.getStorage(dateKey)
+            const dateData = data || {}
             const dayData = dateData[date] = dateData[date] || { pay: 0, income: 0, list: [] }
             labelTitle = label === 'custom' ? labelCustom : labelTitle
             label = label === 'custom' ? await this.handleLabel() : label

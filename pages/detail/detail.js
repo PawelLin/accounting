@@ -20,21 +20,23 @@ Page({
         })
         this.getData(date)
     },
-    getData (key) {
-        util.getStorage(key).then(res => {
+    getData (month) {
+        util.getStorage(month).then(res => {
             let payNumber = 0
             let incomeNumber = 0
             const result = []
             const data = res.data || {}
+            const today = util.formatDate(new Date())
+            const dayValues = ['今天', '昨天']
             Object.keys(data).sort((a, b) => new Date(b) - new Date(a)).forEach(key => {
                 const { pay, income, list } = data[key]
-                const date = util.formatDate(key, 'MM月dd日')
-                const amount = util.numberSubtract(income - pay)
-                result.push({ key, date, amount, list })
+                const dayText = dayValues[key.replace(month, '') - today.replace(month, '')]
+                const date = util.formatDate(key, `MM月dd日 ${dayText || '星期w'}`)
+                const amount = util.formatAmount(util.numberSubtract(income - pay))
+                result.push({ key, date, amount, list: list.map(item => ({ ...item, amount: util.formatAmount(item.amount) })) })
                 payNumber = util.numberAddition(payNumber + pay)
                 incomeNumber = util.numberAddition(incomeNumber + income)
             })
-            console.log(result)
             this.setData({
                 payNumber: util.formatAmount(payNumber),
                 incomeNumber: util.formatAmount(incomeNumber),
@@ -42,12 +44,15 @@ Page({
             })
         })
     },
+    init () {
+        const date = util.formatDate(new Date(), 'yyyy-MM')
+        this.setPickData(date)
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        const date = util.formatDate(new Date(), 'yyyy-MM')
-        this.setPickData(date)
+        this.init()
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -63,6 +68,7 @@ Page({
                 selected: 0
             })
         }
+        util.reInit(this.init)
     },
     /**
      * 生命周期函数--监听页面隐藏

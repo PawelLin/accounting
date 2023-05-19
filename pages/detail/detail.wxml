@@ -22,7 +22,7 @@
             <view class="scroll-space"></view>
             <view wx:for="{{list}}" wx:key="key" class="account">
                 <view class="account-header">
-                    <view>{{item.date}} 星期三</view>
+                    <view>{{item.date}}</view>
                     <view>{{item.amount < 0 ? '支出' : '收入'}}: {{item.amount}}</view>
                 </view>
                 <view class="account-contain">

@@ -9,6 +9,7 @@ const formatDate = (date, format = 'yyyy-MM-dd') => {
             'm+': date.getMinutes(),
             's+': date.getSeconds(),
             'q+': Math.floor((date.getMonth() + 3) / 3),
+            'w': ['日', '一', '二', '三', '四', '五', '六'][date.getDay()],
             S: date.getMilliseconds(),
         }
         Object.keys(data).forEach((key) => {
@@ -30,6 +31,12 @@ const formatAmount = (value, decimalPlaces) => {
     const lastCharIsPoint = value.toString().match(/\.$/)
     return integer.replace(/\B(?=((?:\d{3})+(?!\d)))/g, ',') + (lastCharIsPoint ? '.' : (decimal && `.${decimal}`))
 }
+const padEndAmount = (value, decimalPlaces = 2) => {
+    if (!value && value !== 0) return value
+    const [int, decimal] = value.toString().split('.')
+    return int + '.' + (decimal || '').padEnd(decimalPlaces, 0)
+}
+const formatAmountPadEnd = (value, decimalPlaces) => padEndAmount(formatAmount(value, decimalPlaces), decimalPlaces)
 const calcPrepare = args => {
     const toFixedMaxlength = args.reduce((length, str = '') => {
         str = str === 0 ? '0' : `${str || ''}`
@@ -81,12 +88,24 @@ const setStorage = (key, data) => {
         })
     })
 }
+const reInit = async fn => {
+    const { data } = await getStorage('reInit')
+    if (data) {
+        fn()
+        return setStorage('reInit', false)
+    } else {
+        return setStorage('reInit', true)
+    }
+}
 
 module.exports = {
     formatDate,
     formatAmount,
+    padEndAmount,
+    formatAmountPadEnd,
     numberAddition,
     numberSubtract,
     getStorage,
-    setStorage
+    setStorage,
+    reInit
 }

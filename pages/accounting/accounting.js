@@ -137,6 +137,7 @@ Page({
                 amountFormat: '0',
                 remark: ''
             })
+            util.reInit()
         } catch(error) {
             console.log(error)
         }

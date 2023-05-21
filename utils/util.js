@@ -97,6 +97,15 @@ const reInit = async fn => {
         return setStorage('reInit', true)
     }
 }
+const debounce = function (fn, delay = 600) {
+    let timeout = null
+    return function () {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            fn.apply(this, arguments)
+        }, delay)
+    }
+}
 
 module.exports = {
     formatDate,
@@ -107,5 +116,6 @@ module.exports = {
     numberSubtract,
     getStorage,
     setStorage,
-    reInit
+    reInit,
+    debounce
 }

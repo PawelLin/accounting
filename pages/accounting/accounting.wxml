@@ -6,7 +6,7 @@
     <view class="label">
         <scroll-view scroll-y="true" class="label-scroll">
             <view class="label-item label-custom {{'custom' === label ? 'active' : ''}} {{validate.labelCustom ? 'error' : ''}}" data-key="custom" data-title="{{labelCustom}}" bindtap="labelChange">
-                <input value="{{labelCustom}}" data-key="labelCustom" bindinput="bindInput" type="text" placeholder="自定义标签" maxlength="5" />
+                <input value="{{labelCustom}}" data-key="labelCustom" bindinput="bindLabelCustomInput" type="text" placeholder="自定义标签" maxlength="5" />
             </view>
             <view wx:for="{{labelList}}" wx:key="key" data-key="{{item.key}}" data-title="{{item.title}}" bindtap="labelChange"
             class="label-item {{item.key === label ? 'active' : ''}}">{{item.title}}</view>

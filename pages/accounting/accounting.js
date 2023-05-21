@@ -51,10 +51,11 @@ Page({
     typeChange (e) {
         const data = e.currentTarget.dataset
         if (data.key !== this.data.type) {
+            const labelCustom = this.data.labelCustom
             const labelList = data.key === '0' ? this.data.payLabelList : this.data.incomeLabelList
             this.setData({
                 type: data.key,
-                labelList,
+                labelList: labelCustom ? labelList.filter(item => item.title === labelCustom) : labelList,
                 label: '',
                 labelTitle: ''
             })
@@ -75,6 +76,15 @@ Page({
             [key]: e.detail.value
         })
     },
+    bindLabelCustomInput: util.debounce(function (e) {
+        const key = e.currentTarget.dataset.key
+        const labelCustom = e.detail.value
+        const labelList = this.data.type === '0' ? this.data.payLabelList : this.data.incomeLabelList
+        this.setData({
+            [key]: labelCustom,
+            labelList: labelCustom ? labelList.filter(item => item.title === labelCustom) : labelList
+        })
+    }),
     bindDataChange (e) {
         this.setData({
             date: e.detail.value

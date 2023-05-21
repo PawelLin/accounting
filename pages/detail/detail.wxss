@@ -3,7 +3,7 @@ page {
 }
 .detail {
     height: 100%;
-    padding: 10px 0 calc(env(safe-area-inset-bottom) + 48px);
+    padding: 0 0 calc(env(safe-area-inset-bottom) + 48px);
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -31,8 +31,8 @@ page {
     text-align: center;
 }
 .header-month, .header-amount {
-    margin-top: 10px;
-    font-size: 18px;
+    margin-top: 8px;
+    font-size: 20px;
 }
 .header-month {
     font-size: 20px;
@@ -73,8 +73,8 @@ page {
     align-items: center;
 }
 .account-red {
-    color: #ed4014;
+    color: var(--red-color);
 }
 .account-green {
-    color: #19be6b;
+    color: var(--green-color);
 }

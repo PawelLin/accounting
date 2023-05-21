@@ -120,6 +120,8 @@ Page({
     },
     async handleSubmit () {
         try {
+            const valid = this.validate()
+            if (!valid) return
             let { type, label, labelTitle, labelCustom, amount, remark, date } = this.data
             const dateKey = date.replace(/-\d+$/, '')
             const { data } = await util.getStorage(dateKey)
@@ -141,6 +143,24 @@ Page({
         } catch(error) {
             console.log(error)
         }
+    },
+    validate () {
+        const { label, labelCustom, amount } = this.data
+        if (!label || (label === 'custom' && !labelCustom)) {
+            wx.showToast({
+              title: '请选择或填写标签',
+              icon: 'none'
+            })
+            return false
+        }
+        if (amount === '0') {
+            wx.showToast({
+              title: '请填写金额',
+              icon: 'none'
+            })
+            return false
+        }
+        return true
     },
     handleLabel () {
         const { type, labelCustom, payLabelList, incomeLabelList } = this.data

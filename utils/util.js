@@ -91,7 +91,7 @@ const setStorage = (key, data) => {
 const reInit = async fn => {
     const { data } = await getStorage('reInit')
     if (data) {
-        fn()
+        fn && fn()
         return setStorage('reInit', false)
     } else {
         return setStorage('reInit', true)

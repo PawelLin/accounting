@@ -34,8 +34,8 @@ Page({
                 const date = util.formatDate(key, `MM月dd日 ${dayText || '星期w'}`)
                 const amount = util.formatAmount(util.numberSubtract(income - pay))
                 result.push({ key, date, amount, list: list.map(item => ({ ...item, amount: util.formatAmount(item.amount) })) })
-                payNumber = util.numberAddition(payNumber + pay)
-                incomeNumber = util.numberAddition(incomeNumber + income)
+                payNumber = util.numberAddition(payNumber, pay)
+                incomeNumber = util.numberAddition(incomeNumber, income)
             })
             this.setData({
                 payNumber: util.formatAmount(payNumber),

@@ -1,4 +1,5 @@
 <view class="detail">
+    <custom-nav-bar title="明细"></custom-nav-bar>
     <view class="header-view">
         <view class="header">
             <picker value="{{pickData.date}}" mode="date" fields="month" bindchange="bindPickDataChange">
@@ -28,7 +29,7 @@
                 <view class="account-contain">
                     <view wx:for="{{item.list}}" wx:key="time" class="account-item">
                         <view>{{item.labelTitle}}</view>
-                        <view class="{{item.amount < 0 ? 'account-green' : 'account-red'}}">{{item.amount}}</view>
+                        <view class="{{item.amount < 0 ? 'account-green' : ''}} {{item.amount > 0 ? 'account-red' : ''}}">{{item.amount}}</view>
                     </view>
                 </view>
             </view>

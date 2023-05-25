@@ -1,3 +1,4 @@
 <view>
     <custom-nav-bar title="趋势"></custom-nav-bar>
+    <canvas type="2d" id="myCanvas" class="canvas"></canvas>
 </view>

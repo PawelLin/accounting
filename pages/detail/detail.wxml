@@ -28,7 +28,10 @@
                 </view>
                 <view class="account-contain">
                     <view wx:for="{{item.list}}" wx:key="time" class="account-item">
-                        <view>{{item.labelTitle}}</view>
+                        <picker value="{{item.labelIndex}}" range="{{item.labelList}}" range-key="title"
+                            data-date="{{item.date}}" data-index="{{index}}" bindchange="bindLabelChange">
+                            <view>{{item.labelTitle}}</view>
+                        </picker>
                         <view class="{{item.amount < 0 ? 'account-green' : ''}} {{item.amount > 0 ? 'account-red' : ''}}">{{item.amount}}</view>
                     </view>
                 </view>

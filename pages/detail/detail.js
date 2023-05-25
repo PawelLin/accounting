@@ -8,19 +8,37 @@ Page({
             date: '',
             year: '',
             month: ''
-        }
+        },
+        labelList: [],
+        payLabelList: null,
+        incomeLabelList: null,
     },
     bindPickDataChange (e) {
         this.setPickData(e.detail.value)
     },
-    setPickData (date) {
+    setPickData (date, reInit) {
         const [ year, month ] = date.split('-')
         this.setData({
             pickData: { date, year, month }
         })
-        this.getData(date)
+        this.getData(date, reInit)
     },
-    getData (month) {
+    async getData (month, reInit) {
+        let payLabelList = []
+        let incomeLabelList = []
+        if (this.reInit || !this.data.payLabelList || !this.data.incomeLabelList) {
+            await Promise.all([util.getStorage('payLabelList'), util.getStorage('incomeLabelList')]).then(res => {
+                payLabelList = res[0].data || []
+                incomeLabelList = res[1].data || []
+                this.setData({
+                    payLabelList,
+                    incomeLabelList
+                })
+            })
+        } else {
+            payLabelList = this.data.payLabelList
+            incomeLabelList = this.data.incomeLabelList
+        }
         util.getStorage(month).then(res => {
             let payNumber = 0
             let incomeNumber = 0
@@ -30,10 +48,19 @@ Page({
             const dayValues = ['今天', '昨天']
             Object.keys(data).sort((a, b) => new Date(b) - new Date(a)).forEach(key => {
                 const { pay, income, list } = data[key]
-                const dayText = dayValues[key.replace(month, '') - today.replace(month, '')]
+                const dayIndex = key.replace(month, '') - today.replace(month, '')
+                const dayText = dayValues[dayIndex]
                 const date = util.formatDate(key, `MM月dd日 ${dayText || '星期w'}`)
                 const amount = util.formatAmount(util.numberSubtract(income - pay))
-                result.push({ key, date, amount, list: list.map(item => ({ ...item, amount: util.formatAmount(item.amount) })) })
+                result.push({ key, date, amount, list: list.map(item => {
+                    const labelList = item.type === '0' ? payLabelList : incomeLabelList
+                    return {
+                        ...item,
+                        amount: util.formatAmount(item.amount),
+                        labelIndex: labelList.findIndex(({ key }) => key === item.label),
+                        labelList
+                    }
+                })})
                 payNumber = util.numberAddition(payNumber, pay)
                 incomeNumber = util.numberAddition(incomeNumber, income)
             })
@@ -44,9 +71,26 @@ Page({
             })
         })
     },
-    init () {
+    async bindLabelChange (e) {
+        const { date, index } = e.currentTarget.dataset
+        const value = e.detail.value
+        const month = date.replace(/-\d+$/, '')
+        console.log(date, month)
+        const item = this.data.list.filter(({ key }) => key === date)[0].list[index]
+        const newLabel = item.labelList[value]
+        const isChange = newLabel.key !== item.label
+        if (isChange) {
+            const { data } = await util.getStorage(month)
+            const target = data[date].list[index]
+            target.label = newLabel.key
+            target.labelTitle = newLabel.title
+            await util.setStorage(month, data)
+            this.setPickData(month)
+        }
+    },
+    init (reInit) {
         const date = util.formatDate(new Date(), 'yyyy-MM')
-        this.setPickData(date)
+        this.setPickData(date, reInit)
     },
     /**
      * 生命周期函数--监听页面加载
@@ -68,7 +112,7 @@ Page({
                 selected: 0
             })
         }
-        util.reInit(this.init)
+        util.reInit(() => this.init(true))
     },
     /**
      * 生命周期函数--监听页面隐藏

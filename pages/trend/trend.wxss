@@ -15,5 +15,6 @@
     box-shadow: var(--soft-box-shadow);
 }
 .canvas {
-    box-shadow: var(--soft-box-shadow-inset);
+    width: 100px;
+    height: 100px;
 }

@@ -26,24 +26,37 @@ Page({
     async getData (month, reInit) {
         let payLabelList = []
         let incomeLabelList = []
-        if (this.reInit || !this.data.payLabelList || !this.data.incomeLabelList) {
-            await Promise.all([util.getStorage('payLabelList'), util.getStorage('incomeLabelList')]).then(res => {
-                payLabelList = res[0].data || []
-                incomeLabelList = res[1].data || []
+        if (reInit || !this.data.payLabelList || !this.data.incomeLabelList) {
+            await wx.cloud.callFunction({
+                name: 'getLabel'
+            }).then(res => {
+                const data = res.result.data
+                const payLabelList = data.filter(item => item.type === '0').reverse().map(item => ({ ...item, key: item._id }))
+                const incomeLabelList = data.filter(item => item.type === '1').reverse().map(item => ({ ...item, key: item._id }))
                 this.setData({
                     payLabelList,
                     incomeLabelList
                 })
-            })
+            }).catch(() => {})
         } else {
             payLabelList = this.data.payLabelList
             incomeLabelList = this.data.incomeLabelList
         }
-        util.getStorage(month).then(res => {
+        wx.cloud.callFunction({
+            name: 'getBill',
+            data: { date: month }
+        }).then(res => {
+            const data = {}
+            res.result.data.forEach(item => {
+                data[item.date] = data[item.date] || { pay: 0, income: 0, list: [] }
+                const calcKey = item.type === '0' ? 'pay' : 'income'
+                item.amount = item.type === '0' ? -item.amount : item.amount
+                data[item.date][calcKey] = util.numberAddition(data[item.date][calcKey], item.amount)
+                data[item.date].list.push(item)
+            })
             let payNumber = 0
             let incomeNumber = 0
             const result = []
-            const data = res.data || {}
             const today = util.formatDate(new Date())
             const dayValues = ['今天', '昨天']
             Object.keys(data).sort((a, b) => new Date(b) - new Date(a)).forEach(key => {
@@ -51,8 +64,8 @@ Page({
                 const dayIndex = key.replace(month, '') - today.replace(month, '')
                 const dayText = dayValues[dayIndex]
                 const date = util.formatDate(key, `MM月dd日 ${dayText || '星期w'}`)
-                const amount = util.formatAmount(util.numberSubtract(income - pay))
-                result.push({ key, date, amount, list: list.map(item => {
+                const amount = util.formatAmount(util.numberSubtract(income, pay))
+                result.push({ key, date, amount, list: list.reverse().map(item => {
                     const labelList = item.type === '0' ? payLabelList : incomeLabelList
                     return {
                         ...item,

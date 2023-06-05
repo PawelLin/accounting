@@ -90,6 +90,9 @@ const setStorage = (key, data) => {
 }
 const reInit = async fn => {
     const { data } = await getStorage('reInit')
+    if (data === undefined) {
+        return setStorage('reInit', false)
+    }
     if (data) {
         fn && fn()
         return setStorage('reInit', false)
@@ -97,7 +100,7 @@ const reInit = async fn => {
         return setStorage('reInit', true)
     }
 }
-const debounce = function (fn, delay = 600) {
+const debounce = function (fn, delay = 200) {
     let timeout = null
     return function () {
         clearTimeout(timeout)

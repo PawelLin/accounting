@@ -31,22 +31,21 @@ Page({
         }
     },
     initData () {
-        const date = util.formatDate(new Date(), 'yyyy-MM-dd')
-        this.setData({
-            date,
-            today: date,
-            labelList: this.data.payLabelList
-        })
-        Promise.all([util.getStorage('payLabelList'), util.getStorage('incomeLabelList')]).then(res => {
-            const payLabelList = res[0].data || []
-            const incomeLabelList = res[1].data || []
-            const labelList = this.data.type === '0' ? payLabelList : incomeLabelList
+        wx.cloud.callFunction({
+            name: 'getLabel'
+        }).then(res => {
+            const data = res.result.data
+            const payLabelList = data.filter(item => item.type === '0').reverse().map(item => ({ ...item, key: item._id }))
+            const incomeLabelList = data.filter(item => item.type === '1').reverse().map(item => ({ ...item, key: item._id }))
+            const date = util.formatDate(new Date(), 'yyyy-MM-dd')
             this.setData({
+                date,
+                today: date,
                 payLabelList,
                 incomeLabelList,
-                labelList
+                labelList: this.data.type === '0' ? payLabelList : incomeLabelList
             })
-        })
+        }).catch(() => {})
     },
     typeChange (e) {
         const data = e.currentTarget.dataset
@@ -133,17 +132,13 @@ Page({
             const valid = this.validate()
             if (!valid) return
             let { type, label, labelTitle, labelCustom, amount, remark, date } = this.data
-            const dateKey = date.replace(/-\d+$/, '')
-            const { data } = await util.getStorage(dateKey)
-            const dateData = data || {}
-            const dayData = dateData[date] = dateData[date] || { pay: 0, income: 0, list: [] }
             labelTitle = label === 'custom' ? labelCustom : labelTitle
             label = label === 'custom' ? await this.handleLabel() : label
-            const typeKey = type === '0' ? 'pay' : 'income'
-            dayData[typeKey] = util.numberAddition(dayData[typeKey], amount)
-            amount = type === '0' ? -amount : +amount
-            dayData.list.push({ type, label, labelTitle, amount, remark, date, time: Date.now() })
-            await util.setStorage(dateKey, dateData)
+            const params = { type, label, labelTitle, amount: +amount, remark, date, time: Date.now() }
+            await wx.cloud.callFunction({
+                name: 'addBill',
+                data: { data: params }
+            })
             this.setData({
                 amount: '0',
                 amountFormat: '0',
@@ -178,9 +173,13 @@ Page({
         const key = isPay ? 'payLabelList' : 'incomeLabelList'
         const exist = this.data[key].filter(item => item.title === labelCustom)[0]
         if (exist) return exist.key
-        const labelItem = { title: labelCustom, key: Date.now().toString() }
-        const labelList = [labelItem, ...(isPay ? payLabelList : incomeLabelList)]
-        return util.setStorage(key, labelList).then(res => {
+        const labelItem = { title: labelCustom, type }
+        return wx.cloud.callFunction({
+            name: 'addLabel',
+            data: { data: labelItem }
+        }).then(res => {
+            labelItem.key = res.result._id
+            const labelList = [labelItem, ...(isPay ? payLabelList : incomeLabelList)]
             this.setData({
                 labelList,
                 [key]: labelList,

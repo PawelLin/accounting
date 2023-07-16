@@ -21,7 +21,7 @@
     <view class="account-view">
         <scroll-view class="account-scroll" scroll-y="true">
             <view class="scroll-space"></view>
-            <view wx:for="{{list}}" wx:key="key" class="account">
+            <view wx:for="{{list}}" wx:for-index="pindex" wx:key="key" class="account">
                 <view class="account-header">
                     <view>{{item.date}}</view>
                     <view>{{item.amount < 0 ? '支出' : '收入'}}: {{item.amount}}</view>
@@ -29,7 +29,7 @@
                 <view class="account-contain">
                     <view wx:for="{{item.list}}" wx:key="time" class="account-item">
                         <picker value="{{item.labelIndex}}" range="{{item.labelList}}" range-key="title"
-                            data-date="{{item.date}}" data-index="{{index}}" bindchange="bindLabelChange">
+                            data-pindex="{{pindex}}" data-index="{{index}}" bindchange="bindLabelChange">
                             <view>{{item.labelTitle}}</view>
                         </picker>
                         <view class="{{item.amount < 0 ? 'account-green' : ''}} {{item.amount > 0 ? 'account-red' : ''}}">{{item.amount}}</view>

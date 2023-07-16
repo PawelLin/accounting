@@ -1,0 +1,113 @@
+page {
+    height: 100%;
+}
+.summary {
+    padding: 0 0 calc(env(safe-area-inset-bottom) + 48px);
+    /* text-shadow: var(--soft-text-shadow); */
+    --margin-gap: calc((16vw - 20px) / 8);
+}
+.summary-label {
+    margin: 0 10px;
+    padding: var(--margin-gap);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: var(--soft-box-shadow);
+}
+.summary-label + .summary-label {
+    margin-top: 10px;
+}
+.title {
+    width: 60px;
+    flex: none;
+    font-size: 14px;
+}
+.count {
+    flex: 1;
+    display: flex;
+    font-size: 11px;
+}
+.count-item {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 4px;
+    border-radius: 10px;
+    box-shadow: var(--soft-box-shadow-inset);
+}
+.count-value {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 5px;
+    height: 12px;
+    white-space: nowrap;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: var(--soft-box-shadow);
+    box-sizing: border-box;
+}
+.count-pay-value {
+    background-color: var(--green-color);
+}
+.count-income-value {
+    background-color: var(--red-color);
+}
+.count-text {
+    line-height: 1;
+}
+.button-status {
+    flex: none;
+    width: 20px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1;
+}
+.list {
+    display: none;
+}
+.expand .list {
+    margin-top: var(--margin-gap);
+    display: flex;
+    flex-wrap: wrap;
+}
+.detail {
+    padding: 0 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 12vw;
+    height: 12vw;
+    font-size: 10.5px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.detail-amount {
+    box-shadow: var(--soft-box-shadow-inset);
+}
+.detail:not(:nth-child(7n + 1)) {
+    margin-left: var(--margin-gap);
+}
+.detail:nth-child(n + 8) {
+    margin-top: var(--margin-gap);
+}
+.value {
+    line-height: 1;
+}
+.day {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+}
+.pay {
+    text-align: right;
+    color: var(--green-color);
+}
+.income {
+    text-align: right;
+    color: var(--red-color);
+}
+.hidden {
+    visibility: hidden;
+}

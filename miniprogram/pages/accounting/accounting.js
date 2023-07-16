@@ -1,4 +1,4 @@
-// index.js
+const app = getApp()
 const util = require('../../utils/util.js')
 Page({
     data: {
@@ -21,7 +21,9 @@ Page({
         isEqual: false
     },
     onLoad() {
-        this.initData()
+        // app.openidReady().then(() => {
+        //     this.initData()
+        // })
     },
     onShow() {
         if (typeof this.getTabBar === 'function' && this.getTabBar()) {
@@ -32,7 +34,8 @@ Page({
     },
     initData () {
         wx.cloud.callFunction({
-            name: 'getLabel'
+            name: 'getLabel',
+            data: { openid: app.globalData.openid }
         }).then(res => {
             const data = res.result.data
             const payLabelList = data.filter(item => item.type === '0').reverse().map(item => ({ ...item, key: item._id }))
@@ -137,14 +140,14 @@ Page({
             const params = { type, label, labelTitle, amount: +amount, remark, date, time: Date.now() }
             await wx.cloud.callFunction({
                 name: 'addBill',
-                data: { data: params }
+                data: { data: { ...params, openid: app.globalData.openid } }
             })
             this.setData({
                 amount: '0',
                 amountFormat: '0',
                 remark: ''
             })
-            util.reInit()
+            app.globalData.accounted = true
         } catch(error) {
             console.log(error)
         }
@@ -176,7 +179,7 @@ Page({
         const labelItem = { title: labelCustom, type }
         return wx.cloud.callFunction({
             name: 'addLabel',
-            data: { data: labelItem }
+            data: { data: { ...labelItem, openid: app.globalData.openid } }
         }).then(res => {
             labelItem.key = res.result._id
             const labelList = [labelItem, ...(isPay ? payLabelList : incomeLabelList)]

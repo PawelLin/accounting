@@ -14,10 +14,10 @@ Component({
             selectedIconPath: "/image/icon_component_HL.png",
             text: "记账"
         }, {
-            pagePath: "/pages/trend/trend",
+            pagePath: "/pages/summary/summary",
             iconPath: "/image/icon_API.png",
             selectedIconPath: "/image/icon_API_HL.png",
-            text: "趋势"
+            text: "汇总"
         }]
     },
     attached() {
@@ -30,7 +30,6 @@ Component({
             this.setData({
                 selected: data.index
             })
-            console.log(data.index)
         }
     }
 })

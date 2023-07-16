@@ -1,0 +1,29 @@
+<view class="summary">
+    <custom-nav-bar title="汇总"></custom-nav-bar>
+    <view class="content">
+        <view wx:for="{{list}}" class="summary-label {{item.expand ? 'expand' : ''}}">
+            <view class="title">{{item.title}}</view>
+            <view class="count">
+                <view class="count-item count-pay">
+                    <view class="count-value count-pay-value">100</view>
+                    <view class="count-text">支出</view>
+                </view>
+                <view class="count-item count-income">
+                    <view class="count-value count-income-value">100</view>
+                    <view class="count-text">收入</view>
+                </view>
+            </view>
+            <view class="button-status" data-index="{{index}}" bindtap="onExpandChange">{{item.expand ? '-' : '+'}}</view>
+            <view class="list">
+                <view wx:for="{{item.data}}" class="detail {{item.pay || item.income ? 'detail-amount' : '' }}">
+                    <view class="value day">
+                        <text>{{item.day}}</text>
+                        <text>{{index < 7 ? week[index] : ''}}</text>
+                    </view>
+                    <view class="value pay {{!item.pay && !item.income ? 'hidden' : ''}}">{{item.pay}}</view>
+                    <view class="value income {{!item.pay && !item.income ? 'hidden' : ''}}">{{item.income}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

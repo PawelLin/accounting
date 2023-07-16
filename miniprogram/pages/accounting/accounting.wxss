@@ -35,12 +35,12 @@ page {
 .label {
     margin: 10px 10px 0;
     flex: 1;
-    border-radius: 10px;
-    box-shadow: var(--soft-box-shadow-inset);
     overflow-y: hidden;
 }
 .label-scroll {
     height: 100%;
+    border-radius: 10px;
+    box-shadow: var(--soft-box-shadow-inset);
 }
 .label-item {
     margin: 10px 0 0 10px;

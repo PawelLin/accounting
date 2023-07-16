@@ -1,3 +1,4 @@
+const app = getApp()
 const util = require('../../utils/util.js')
 Page({
     data: {
@@ -28,11 +29,12 @@ Page({
         let incomeLabelList = []
         if (reInit || !this.data.payLabelList || !this.data.incomeLabelList) {
             await wx.cloud.callFunction({
-                name: 'getLabel'
+                name: 'getLabel',
+                data: { openid: app.globalData.openid }
             }).then(res => {
                 const data = res.result.data
-                const payLabelList = data.filter(item => item.type === '0').reverse().map(item => ({ ...item, key: item._id }))
-                const incomeLabelList = data.filter(item => item.type === '1').reverse().map(item => ({ ...item, key: item._id }))
+                payLabelList = data.filter(item => item.type === '0').reverse().map(item => ({ ...item, key: item._id }))
+                incomeLabelList = data.filter(item => item.type === '1').reverse().map(item => ({ ...item, key: item._id }))
                 this.setData({
                     payLabelList,
                     incomeLabelList
@@ -44,7 +46,7 @@ Page({
         }
         wx.cloud.callFunction({
             name: 'getBill',
-            data: { date: month }
+            data: { date: month, openid: app.globalData.openid }
         }).then(res => {
             const data = {}
             res.result.data.forEach(item => {
@@ -85,20 +87,25 @@ Page({
         })
     },
     async bindLabelChange (e) {
-        const { date, index } = e.currentTarget.dataset
+        const { pindex, index } = e.currentTarget.dataset
         const value = e.detail.value
-        const month = date.replace(/-\d+$/, '')
-        console.log(date, month)
-        const item = this.data.list.filter(({ key }) => key === date)[0].list[index]
+        const item = this.data.list[pindex].list[index]
         const newLabel = item.labelList[value]
         const isChange = newLabel.key !== item.label
         if (isChange) {
-            const { data } = await util.getStorage(month)
-            const target = data[date].list[index]
-            target.label = newLabel.key
-            target.labelTitle = newLabel.title
-            await util.setStorage(month, data)
-            this.setPickData(month)
+            const { key: label, title: labelTitle } = newLabel
+            wx.cloud.callFunction({
+                name: 'updateBill',
+                data: {
+                    id: item._id,
+                    data: { label, labelTitle }
+                }
+            }).then(() => {
+                this.setData({
+                    [`list[${pindex}].list[${index}].label`]: label,
+                    [`list[${pindex}].list[${index}].labelTitle`]: labelTitle
+                })
+            })
         }
     },
     init (reInit) {
@@ -109,7 +116,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        this.init()
+        // app.openidReady().then(() => {
+        //     this.init()
+        // })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -125,7 +134,10 @@ Page({
                 selected: 0
             })
         }
-        util.reInit(() => this.init(true))
+        if (app.globalData.accounted) {
+            this.init(true)
+            app.globalData.accounted = false
+        }
     },
     /**
      * 生命周期函数--监听页面隐藏

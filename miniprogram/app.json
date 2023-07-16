@@ -2,7 +2,8 @@
     "pages": [
         "pages/detail/detail",
         "pages/accounting/accounting",
-        "pages/trend/trend"
+        "pages/trend/trend",
+        "pages/summary/summary"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -19,8 +20,8 @@
             "pagePath": "pages/accounting/accounting",
             "text": "记账"
         }, {
-            "pagePath": "pages/trend/trend",
-            "text": "趋势"
+            "pagePath": "pages/summary/summary",
+            "text": "汇总"
         }]
     },
     "style": "v2",

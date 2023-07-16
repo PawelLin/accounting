@@ -9,5 +9,6 @@ const db = cloud.database()
 exports.main = async (event, context) => await db.collection('bill').where({
     date: db.RegExp({
         regexp: event.date
-    })
+    }),
+    openid: event.openid
 }).get()

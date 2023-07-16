@@ -6,6 +6,7 @@ page {
     --primary-color: #e8f2fb;
     --red-color: #ed4014;
     --green-color: #19be6b;
+    --orange-color: #ff9900;
     --soft-box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
     --soft-box-shadow-inset: inset 1px 1px 2px #d3e0ec, inset -1px -1px 2px #fff;
     --soft-text-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;

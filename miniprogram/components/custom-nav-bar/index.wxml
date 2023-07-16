@@ -1,3 +1,5 @@
 <view class="nav-bar" style="padding:{{statusBarHeight}}px 10px 0;height:{{barHeight}}px;">
-    <view class="nav-bar-title" style="height:{{capsuleHeight}}px;border-radius:{{radiusSize}}px;">{{title}}</view>
+    <view class="nav-bar-name" style="height:{{capsuleHeight}}px;border-radius:{{radiusSize}}px;">
+        若㩼钱 - {{title}}
+    </view>
 </view>

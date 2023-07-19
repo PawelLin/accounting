@@ -21,9 +21,9 @@ Page({
         isEqual: false
     },
     onLoad() {
-        // app.openidReady().then(() => {
-        //     this.initData()
-        // })
+        app.openidReady().then(() => {
+            this.initData()
+        })
     },
     onShow() {
         if (typeof this.getTabBar === 'function' && this.getTabBar()) {
@@ -147,7 +147,8 @@ Page({
                 amountFormat: '0',
                 remark: ''
             })
-            app.globalData.accounted = true
+            app.globalData.reDetail = true
+            app.globalData.reSummary = true
         } catch(error) {
             console.log(error)
         }

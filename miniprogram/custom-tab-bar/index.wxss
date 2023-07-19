@@ -35,11 +35,66 @@
     box-shadow: inset 1px 1px 2px #d3e0ec, inset -1px -1px 2px #fff;
 }
 
-.tab-bar-item image {
+.tab-bar-item .image {
     width: 27px;
     height: 27px;
 }
-
-.tab-bar-item view {
+.icon {
+    display: flex;
+    flex-direction: column;
+    height: 15px;
+}
+.icon-item {
+    position: relative;
+    width: 18px;
+    height: 6px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    background-color: #7A7E83;
+}
+.icon.active .icon-item {
+    background-color: #19be6b;
+}
+.icon-item + .icon-item {
+    margin-top: 3px;
+}
+.icon-item::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.icon-accounting {
+    justify-content: center;
+}
+.icon-accounting .icon-item {
+    transform: rotate(-30deg);
+}
+.icon-summary {
+    position: relative;
+    padding-right: 6px;
+}
+.icon-summary .icon-item {
+    width: 14px;
+}
+.icon-summary-item {
+    position: absolute;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    background-color: #7A7E83;
+}
+.icon.active .icon-summary-item {
+    background-color: #19be6b;
+}
+.text {
+    margin-top: 5px;
     font-size: 10px;
+    line-height: 1;
 }

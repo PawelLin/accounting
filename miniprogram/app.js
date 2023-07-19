@@ -23,6 +23,7 @@ App({
     },
     globalData: {
         openid: '',
-        accounted: false
+        reDetail: false,
+        reSummary: false,
     }
 })

@@ -1,21 +1,76 @@
 page {
     height: 100%;
+    --margin-gap: calc((16vw - 20px) / 8);
+    text-shadow: var(--soft-text-shadow);
 }
 .summary {
     padding: 0 0 calc(env(safe-area-inset-bottom) + 48px);
-    /* text-shadow: var(--soft-text-shadow); */
-    --margin-gap: calc((16vw - 20px) / 8);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
-.summary-label {
+.header {
     margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.header-date {
     padding: var(--margin-gap);
+    width: 100px;
+    display: flex;
+    border-radius: 10px;
+    white-space: nowrap;
+    box-shadow: var(--soft-box-shadow);
+    box-sizing: border-box;
+}
+.header-type {
+    display: flex;
+}
+.header-item {
+    padding: var(--margin-gap);
+    width: 60px;
+    text-align: center;
+    box-shadow: var(--soft-box-shadow);
+}
+.header-item-active {
+    box-shadow: var(--soft-box-shadow-inset);
+}
+.header-item-left {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.header-item-right {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.header-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    border-radius: 10px;
+    box-shadow: var(--soft-box-shadow);
+}
+.content {
+    flex: 1;
+    overflow-y: hidden;
+}
+.content-scroll {
+    height: 100%;
+}
+.label-content {
+    margin: 0 10px;
+}
+.label {
+    padding: var(--margin-gap) 0 var(--margin-gap) var(--margin-gap);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
 }
-.summary-label + .summary-label {
+.label + .label {
     margin-top: 10px;
 }
 .title {
@@ -26,7 +81,7 @@ page {
 .count {
     flex: 1;
     display: flex;
-    font-size: 11px;
+    font-size: 12px;
 }
 .count-item {
     flex: 1;
@@ -41,12 +96,12 @@ page {
     display: inline-flex;
     align-items: center;
     padding: 0 5px;
-    height: 12px;
     white-space: nowrap;
     color: #fff;
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
     box-sizing: border-box;
+    text-shadow: none;
 }
 .count-pay-value {
     background-color: var(--green-color);
@@ -54,15 +109,47 @@ page {
 .count-income-value {
     background-color: var(--red-color);
 }
-.count-text {
-    line-height: 1;
-}
-.button-status {
+.button-expand {
+    position: relative;
+    padding: 0 var(--margin-gap) 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex: none;
     width: 20px;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1;
+}
+.button-expand::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: calc(100% + var(--margin-gap) * 2);
+}
+.expand-icon {
+    position: relative;
+    width: 6px;
+    height: 16px;
+    border-radius: 5px;
+    box-shadow: var(--soft-box-shadow);
+    transition: transform 0.3s ease-in-out;
+}
+.expand-icon-pay {
+    background-color: var(--green-color);
+}
+.expand-icon-income {
+    background-color: var(--red-color);
+}
+.expand-icon::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.expand-active {
+    transform: rotate(45deg);
 }
 .list {
     display: none;
@@ -73,17 +160,17 @@ page {
     flex-wrap: wrap;
 }
 .detail {
-    padding: 0 3px;
+    padding: 6px 3px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 12vw;
     height: 12vw;
-    font-size: 10.5px;
+    font-size: 11px;
     border-radius: 10px;
     box-sizing: border-box;
 }
-.detail-amount {
+.detail-trade {
     box-shadow: var(--soft-box-shadow-inset);
 }
 .detail:not(:nth-child(7n + 1)) {
@@ -98,7 +185,7 @@ page {
 .day {
     display: flex;
     justify-content: space-between;
-    font-size: 11px;
+    font-size: 12px;
 }
 .pay {
     text-align: right;
@@ -110,4 +197,7 @@ page {
 }
 .hidden {
     visibility: hidden;
+}
+.none {
+    display: none;
 }

@@ -8,13 +8,13 @@
                     <view class="header-month">{{pickData.month}}月</view>
                 </view>
             </picker>
-            <view class="header-item header-income">
-                <view class="header-title">收入</view>
-                <view class="header-amount account-red">{{incomeNumber}}</view>
-            </view>
             <view class="header-item header-pay">
                 <view class="header-title">支出</view>
                 <view class="header-amount account-green">{{payNumber}}</view>
+            </view>
+            <view class="header-item header-income">
+                <view class="header-title">收入</view>
+                <view class="header-amount account-red">{{incomeNumber}}</view>
             </view>
         </view>
     </view>

@@ -1,29 +1,46 @@
 <view class="summary">
     <custom-nav-bar title="汇总"></custom-nav-bar>
-    <view class="content">
-        <view wx:for="{{list}}" class="summary-label {{item.expand ? 'expand' : ''}}">
-            <view class="title">{{item.title}}</view>
-            <view class="count">
-                <view class="count-item count-pay">
-                    <view class="count-value count-pay-value">100</view>
-                    <view class="count-text">支出</view>
-                </view>
-                <view class="count-item count-income">
-                    <view class="count-value count-income-value">100</view>
-                    <view class="count-text">收入</view>
-                </view>
+    <view class="header">
+        <picker value="{{pickDate.date}}" mode="date" fields="month" bindchange="bindPickDateChange">
+            <view class="header-date">
+                <view class="header-title">{{pickDate.year}}年</view>
+                <view class="header-month">{{pickDate.month}}月</view>
             </view>
-            <view class="button-status" data-index="{{index}}" bindtap="onExpandChange">{{item.expand ? '-' : '+'}}</view>
-            <view class="list">
-                <view wx:for="{{item.data}}" class="detail {{item.pay || item.income ? 'detail-amount' : '' }}">
-                    <view class="value day">
-                        <text>{{item.day}}</text>
-                        <text>{{index < 7 ? week[index] : ''}}</text>
-                    </view>
-                    <view class="value pay {{!item.pay && !item.income ? 'hidden' : ''}}">{{item.pay}}</view>
-                    <view class="value income {{!item.pay && !item.income ? 'hidden' : ''}}">{{item.income}}</view>
-                </view>
-            </view>
+        </picker>
+        <view class="header-type">
+            <view class="header-item header-item-left {{selectType === payKey ? 'header-item-active' : ''}}" data-value="{{payKey}}" bindtap="onSelectChange">支出</view>
+            <view class="header-item header-item-right {{selectType === incomeKey ? 'header-item-active' : ''}}" data-value="{{incomeKey}}" bindtap="onSelectChange">收入</view>
         </view>
+        <view class="header-right {{isPay ? 'pay' : 'income'}}">{{isPay ? count.pay : count.income}}</view>
+    </view>
+    <view class="content">
+        <scroll-view class="content-scroll" scroll-y="true">
+            <view class="scroll-space"></view>
+            <view wx:for="{{list}}" wx:key="item.key" class="label-content {{selectType !== item.key ? 'none' : ''}}">
+                <view wx:for="{{item.list}}" wx:key="label" class="label {{item.expand ? 'expand' : ''}}">
+                    <view class="title">{{item.title}}</view>
+                    <view class="count">
+                        <view class="count-item count-pay {{isPay ? 'count-pay' : 'count-income'}}">
+                            <view class="count-value {{isPay ? 'count-pay-value' : 'count-income-value'}}" style="min-width: {{(isPay ? item.payRatio : item.incomeRatio) + '%'}};">
+                                {{isPay ? item.pay : item.income}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="button-expand" data-index="{{index}}" data-expand="{{item.expand}}" bindtap="onExpandChange">
+                        <view class="expand-icon {{isPay ? 'expand-icon-pay' : 'expand-icon-income'}} {{item.expand ? 'expand-active' : ''}}"></view>
+                    </view>
+                    <view class="list">
+                        <view wx:for="{{item.list}}" wx:key="key" class="detail {{(isPay && !item.pay) || (!isPay && !item.income) ? '' : 'detail-trade'}}">
+                            <view class="value day">
+                                <text>{{item.day}}</text>
+                                <text>{{index < 7 ? week[index] : ''}}</text>
+                            </view>
+                            <view class="value {{isPay ? 'pay' : 'income'}} {{(isPay && !item.pay) || (!isPay && !item.income) ? 'hidden' : ''}}">{{(isPay ? item.pay : item.income) || 0}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="scroll-space"></view>
+        </scroll-view>
     </view>
 </view>

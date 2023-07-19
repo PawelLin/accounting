@@ -66,7 +66,7 @@ Page({
                 const dayIndex = key.replace(month, '') - today.replace(month, '')
                 const dayText = dayValues[dayIndex]
                 const date = util.formatDate(key, `MM月dd日 ${dayText || '星期w'}`)
-                const amount = util.formatAmount(util.numberSubtract(income, pay))
+                const amount = util.formatAmount(util.numberAddition(income, pay))
                 result.push({ key, date, amount, list: list.reverse().map(item => {
                     const labelList = item.type === '0' ? payLabelList : incomeLabelList
                     return {
@@ -116,9 +116,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        // app.openidReady().then(() => {
-        //     this.init()
-        // })
+        app.openidReady().then(() => {
+            this.init()
+        })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -134,9 +134,9 @@ Page({
                 selected: 0
             })
         }
-        if (app.globalData.accounted) {
+        if (app.globalData.reDetail) {
             this.init(true)
-            app.globalData.accounted = false
+            app.globalData.reDetail = false
         }
     },
     /**

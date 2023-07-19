@@ -149,6 +149,7 @@ Page({
                     payRatio: 0,
                     income: 0,
                     incomeRatio: 0,
+                    maxLine: Math.ceil((beforeLength + days) / 7),
                     list: [
                         ...Array.from(Array(beforeLength)).map((item, index) => ({ key: index + 1 })),
                         ...Array.from(Array(days)).map((item, index) => ({

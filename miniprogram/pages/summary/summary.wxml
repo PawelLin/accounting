@@ -16,7 +16,7 @@
     <view class="content">
         <scroll-view class="content-scroll" scroll-y="true">
             <view class="scroll-space"></view>
-            <view wx:for="{{list}}" wx:key="item.key" class="label-content {{selectType !== item.key ? 'none' : ''}}">
+            <view wx:for="{{list}}" wx:key="key" class="label-content {{selectType !== item.key ? 'none' : ''}}">
                 <view wx:for="{{item.list}}" wx:key="label" class="label {{item.expand ? 'expand' : ''}}">
                     <view class="title">{{item.title}}</view>
                     <view class="count">
@@ -29,7 +29,7 @@
                     <view class="button-expand" data-index="{{index}}" data-expand="{{item.expand}}" bindtap="onExpandChange">
                         <view class="expand-icon {{isPay ? 'expand-icon-pay' : 'expand-icon-income'}} {{item.expand ? 'expand-active' : ''}}"></view>
                     </view>
-                    <view class="list">
+                    <view class="list" style="{{item.expand ? 'height: calc(' + item.maxLine + ' * 12vw + ' + item.maxLine + ' * var(--margin-gap));' : ''}}">
                         <view wx:for="{{item.list}}" wx:key="key" class="detail {{(isPay && !item.pay) || (!isPay && !item.income) ? '' : 'detail-trade'}}">
                             <view class="value day">
                                 <text>{{item.day}}</text>

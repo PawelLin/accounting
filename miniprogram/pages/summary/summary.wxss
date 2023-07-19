@@ -152,14 +152,14 @@ page {
     transform: rotate(45deg);
 }
 .list {
-    display: none;
-}
-.expand .list {
-    margin-top: var(--margin-gap);
     display: flex;
     flex-wrap: wrap;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
 }
 .detail {
+    margin-top: var(--margin-gap);
     padding: 6px 3px;
     display: flex;
     flex-direction: column;
@@ -175,9 +175,6 @@ page {
 }
 .detail:not(:nth-child(7n + 1)) {
     margin-left: var(--margin-gap);
-}
-.detail:nth-child(n + 8) {
-    margin-top: var(--margin-gap);
 }
 .value {
     line-height: 1;

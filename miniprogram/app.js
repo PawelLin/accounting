@@ -4,7 +4,6 @@ App({
         wx.cloud.init({
             traceUser: true
         })
-        wx.clearStorageSync('reInit')
     },
     openidReady () {
         return new Promise (resolve => {

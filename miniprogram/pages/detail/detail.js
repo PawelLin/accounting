@@ -1,5 +1,6 @@
 const app = getApp()
 const util = require('../../utils/util.js')
+const cloud = require('../../utils/cloud/index')
 Page({
     data: {
         list: [],
@@ -28,7 +29,7 @@ Page({
         let payLabelList = []
         let incomeLabelList = []
         if (reInit || !this.data.payLabelList || !this.data.incomeLabelList) {
-            await wx.cloud.callFunction({
+            await cloud.callFunction({
                 name: 'getLabel',
                 data: { openid: app.globalData.openid }
             }).then(res => {
@@ -44,7 +45,7 @@ Page({
             payLabelList = this.data.payLabelList
             incomeLabelList = this.data.incomeLabelList
         }
-        wx.cloud.callFunction({
+        cloud.callFunction({
             name: 'getBill',
             data: { date: month, openid: app.globalData.openid }
         }).then(res => {
@@ -94,7 +95,7 @@ Page({
         const isChange = newLabel.key !== item.label
         if (isChange) {
             const { key: label, title: labelTitle } = newLabel
-            wx.cloud.callFunction({
+            cloud.callFunction({
                 name: 'updateBill',
                 data: {
                     id: item._id,

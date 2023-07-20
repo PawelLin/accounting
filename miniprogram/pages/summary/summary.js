@@ -1,7 +1,7 @@
 // pages/summary/summary.js
-// import { res } from './data'
 const app = getApp()
-const util = require('../../utils/util.js')
+const util = require('../../utils/util')
+const cloud = require('../../utils/cloud/index')
 Page({
 
     /**
@@ -131,7 +131,7 @@ Page({
             pickDate: { date: dateStr, year, month },
         })
         const { beforeLength, days } = this.getMonthData(date)
-        wx.cloud.callFunction({
+        cloud.callFunction({
             name: 'getBill',
             data: { date: dateStr, openid: app.globalData.openid }
         }).then(res => {
@@ -171,6 +171,8 @@ Page({
             countDatas.payRatio = countDatas.pay / count * 100
             countDatas.incomeRatio = countDatas.income / count * 100
             countDatas.count = util.numberSubtract(countDatas.income, countDatas.pay)
+            countDatas.pay = util.formatAmount(countDatas.pay)
+            countDatas.income = util.formatAmount(countDatas.income)
             this.setData({
                 count: countDatas,
                 'list[0].list': this.getSortList(payDatas, countDatas),

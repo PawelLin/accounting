@@ -1,5 +1,6 @@
 const app = getApp()
 const util = require('../../utils/util.js')
+const cloud = require('../../utils/cloud/index')
 Page({
     data: {
         type: '0',
@@ -33,7 +34,7 @@ Page({
         }
     },
     initData () {
-        wx.cloud.callFunction({
+        cloud.callFunction({
             name: 'getLabel',
             data: { openid: app.globalData.openid }
         }).then(res => {
@@ -138,7 +139,7 @@ Page({
             labelTitle = label === 'custom' ? labelCustom : labelTitle
             label = label === 'custom' ? await this.handleLabel() : label
             const params = { type, label, labelTitle, amount: +amount, remark, date, time: Date.now() }
-            await wx.cloud.callFunction({
+            await cloud.callFunction({
                 name: 'addBill',
                 data: { data: { ...params, openid: app.globalData.openid } }
             })
@@ -178,7 +179,7 @@ Page({
         const exist = this.data[key].filter(item => item.title === labelCustom)[0]
         if (exist) return exist.key
         const labelItem = { title: labelCustom, type }
-        return wx.cloud.callFunction({
+        return cloud.callFunction({
             name: 'addLabel',
             data: { data: { ...labelItem, openid: app.globalData.openid } }
         }).then(res => {

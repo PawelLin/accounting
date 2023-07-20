@@ -49,6 +49,7 @@ page {
     justify-content: center;
     align-items: center;
     width: 100px;
+    font-size: 17px;
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
 }
@@ -74,14 +75,14 @@ page {
     margin-top: 10px;
 }
 .title {
-    width: 60px;
+    width: 70px;
     flex: none;
-    font-size: 14px;
+    font-size: 15px;
 }
 .count {
     flex: 1;
     display: flex;
-    font-size: 12px;
+    font-size: 13px;
 }
 .count-item {
     flex: 1;

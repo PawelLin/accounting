@@ -25,7 +25,7 @@ const formatDate = (date, format = 'yyyy-MM-dd') => {
 const formatAmount = (value, decimalPlaces) => {
     if (!value && value !== 0) return value
     const number = Number(value)
-    if (isNaN(number) || number < 1000) return value
+    if (isNaN(number) || (number < 1000 && number > -1000)) return value
     const numberStr = decimalPlaces || decimalPlaces === 0 ? number.toFixed(decimalPlaces) : number.toString()
     const [integer, decimal = ''] = numberStr.split('.')
     const lastCharIsPoint = value.toString().match(/\.$/)

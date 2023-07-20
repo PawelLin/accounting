@@ -13,7 +13,7 @@ page {
     padding: 0 10px;
 }
 .header {
-    padding: 10px 0;
+    padding: 8px 0;
     display: flex;
     border-radius: 10px;
     box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
@@ -35,7 +35,6 @@ page {
     font-size: 20px;
 }
 .header-month {
-    font-size: 20px;
     font-weight: 600;
 }
 .account-view {
@@ -50,7 +49,7 @@ page {
 }
 .account {
     margin: 0 10px;
-    padding: 8px 10px;
+    padding: 6px 10px;
     border-radius: 10px;
     text-shadow: var(--soft-text-shadow);
     box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
@@ -65,10 +64,12 @@ page {
     display: flex;
     justify-content: space-between;
 }
+.account-contain {
+    font-size: 15px;
+}
 .account-item {
     margin-top: 5px;
     display: flex;
-    font-size: 16px;
     justify-content: space-between;
     align-items: center;
 }

@@ -1,4 +1,5 @@
 // app.js
+const cloud = require('./utils/cloud/index')
 App({
     onLaunch() {
         wx.cloud.init({
@@ -11,7 +12,7 @@ App({
             if (openid) {
                 resolve()
             } else {
-                wx.cloud.callFunction({
+                cloud.callFunction({
                     name: 'getInfo'
                 }).then(res => {
                     this.globalData.openid = res.result.openid

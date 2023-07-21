@@ -53,7 +53,6 @@ Page({
             res.result.data.forEach(item => {
                 data[item.date] = data[item.date] || { pay: 0, income: 0, list: [] }
                 const calcKey = item.type === '0' ? 'pay' : 'income'
-                item.amount = item.type === '0' ? -item.amount : item.amount
                 data[item.date][calcKey] = util.numberAddition(data[item.date][calcKey], item.amount)
                 data[item.date].list.push(item)
             })
@@ -67,12 +66,11 @@ Page({
                 const dayIndex = key.replace(month, '') - today.replace(month, '')
                 const dayText = dayValues[dayIndex]
                 const date = util.formatDate(key, `MM月dd日 ${dayText || '星期w'}`)
-                const amount = util.formatAmount(util.numberAddition(income, pay))
+                const amount = util.numberSubtract(income, pay)
                 result.push({ key, date, amount, list: list.reverse().map(item => {
                     const labelList = item.type === '0' ? payLabelList : incomeLabelList
                     return {
                         ...item,
-                        amount: util.formatAmount(item.amount),
                         labelIndex: labelList.findIndex(({ key }) => key === item.label),
                         labelList
                     }

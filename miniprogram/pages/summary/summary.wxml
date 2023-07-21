@@ -11,7 +11,7 @@
             <view class="header-item header-item-left {{selectType === payKey ? 'header-item-active' : ''}}" data-value="{{payKey}}" bindtap="onSelectChange">支出</view>
             <view class="header-item header-item-right {{selectType === incomeKey ? 'header-item-active' : ''}}" data-value="{{incomeKey}}" bindtap="onSelectChange">收入</view>
         </view>
-        <view class="header-right {{isPay ? 'pay' : 'income'}}">{{isPay ? count.pay : count.income}}</view>
+        <view class="header-right {{isPay ? 'pay' : 'income'}}">{{isPay ? count.payFormat : count.incomeFormat}}</view>
     </view>
     <view class="content">
         <scroll-view class="content-scroll" scroll-y="true">

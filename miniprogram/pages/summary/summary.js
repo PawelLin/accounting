@@ -20,8 +20,10 @@ Page({
         count: {
             pay: 0,
             payRatio: 0,
+            payFormat: 0,
             income: 0,
-            incomeRatio: 0
+            incomeRatio: 0,
+            incomeFormat: 0
         },
         payList: [],
         incomeList: [],
@@ -171,8 +173,8 @@ Page({
             countDatas.payRatio = countDatas.pay / count * 100
             countDatas.incomeRatio = countDatas.income / count * 100
             countDatas.count = util.numberSubtract(countDatas.income, countDatas.pay)
-            countDatas.pay = util.formatAmount(countDatas.pay)
-            countDatas.income = util.formatAmount(countDatas.income)
+            countDatas.payFormat = util.formatAmount(countDatas.pay)
+            countDatas.incomeFormat = util.formatAmount(countDatas.income)
             this.setData({
                 count: countDatas,
                 'list[0].list': this.getSortList(payDatas, countDatas),

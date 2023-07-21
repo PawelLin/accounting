@@ -32,7 +32,8 @@
                             data-pindex="{{pindex}}" data-index="{{index}}" bindchange="bindLabelChange">
                             <view>{{item.labelTitle}}</view>
                         </picker>
-                        <view class="{{item.amount < 0 ? 'account-green' : ''}} {{item.amount > 0 ? 'account-red' : ''}}">{{item.amount}}</view>
+                        <view wx:if="{{item.type === '0'}}" class="account-green">{{-item.amount}}</view>
+                        <view wx:else class="account-red">{{item.amount}}</view>
                     </view>
                 </view>
             </view>

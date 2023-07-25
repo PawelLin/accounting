@@ -3,6 +3,7 @@ const util = require('../../utils/util.js')
 const cloud = require('../../utils/cloud/index')
 Page({
     data: {
+        loading: true,
         list: [],
         payNumber: '0',
         incomeNumber: '0',
@@ -81,7 +82,8 @@ Page({
             this.setData({
                 payNumber: util.formatAmount(payNumber),
                 incomeNumber: util.formatAmount(incomeNumber),
-                list: result
+                list: result,
+                loading: false
             })
         })
     },
@@ -137,30 +139,5 @@ Page({
             this.init(true)
             app.globalData.reDetail = false
         }
-    },
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-    },
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-    },
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-    },
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-    },
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
     }
 })

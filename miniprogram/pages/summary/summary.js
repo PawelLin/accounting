@@ -8,6 +8,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        loading: true,
         pickDate: {
             date: '',
             year: '',
@@ -59,7 +60,7 @@ Page({
                 selected: 2
             })
         }
-        if (app.globalData.reSummary) {
+        if (app.globalData.reSummary && this.data.pickDate.date) {
             this.getSummaryData(this.data.pickDate.date)
             app.globalData.reSummary = false
         }
@@ -178,7 +179,8 @@ Page({
             this.setData({
                 count: countDatas,
                 'list[0].list': this.getSortList(payDatas, countDatas),
-                'list[1].list': this.getSortList(incomeDatas, countDatas, 'income')
+                'list[1].list': this.getSortList(incomeDatas, countDatas, 'income'),
+                loading: false
             })
         })
     },

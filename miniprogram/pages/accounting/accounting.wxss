@@ -21,7 +21,7 @@ page {
     height: 32px;
     box-shadow: var(--soft-box-shadow);
 }
-.type-item:active, .type-item.active {
+.type-item.active {
     box-shadow: var(--soft-box-shadow-inset);
 }
 .type-item:first-child {
@@ -53,14 +53,15 @@ page {
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
 }
-.label-item:active, .label-item.active {
+.label-item.active {
     box-shadow: var(--soft-box-shadow-inset);
+}
+.label-skeleton::after {
+    content: '空';
+    visibility: hidden;
 }
 .label-custom {
     width: 82px;
-}
-.label-space {
-    height: 10px;
 }
 .keyboard {
     margin: auto 0 0;
@@ -102,7 +103,7 @@ page {
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
 }
-.button:active {
+.button-active {
     box-shadow: var(--soft-box-shadow-inset);
 }
 .button-number {

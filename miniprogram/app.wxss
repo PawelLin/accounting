@@ -1,6 +1,6 @@
 /**app.wxss**/
-@import 'assets/font/DengXian.wxss';
-page {
+/* @import 'assets/font/DengXian.wxss'; */
+page, .page-var {
     /* font-family: 'DengXian'; */
     background-color: #e8f2fb;
     --primary-color: #e8f2fb;

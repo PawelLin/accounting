@@ -1,4 +1,7 @@
 Component({
+    options: {
+        addGlobalClass: true
+    },
     data: {
         selected: 0,
         color: "#7A7E83",

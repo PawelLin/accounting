@@ -39,6 +39,7 @@
                         </view>
                     </view>
                 </view>
+                <skeleton-list wx:if="{{loading}}" skeleton-class="label label-skeleton"></skeleton-list>
             </view>
             <view class="scroll-space"></view>
         </scroll-view>

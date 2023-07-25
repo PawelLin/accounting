@@ -1,5 +1,5 @@
 <!--miniprogram/custom-tab-bar/index.wxml-->
-<view class="tab-bar">
+<view class="page-var tab-bar">
     <view wx:for="{{list}}" wx:key="index" class="tab-bar-item {{selected === index ? 'active' : ''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
         <!-- <image class="image" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image> -->
         <view class="icon {{index === 1 ? 'icon-accounting' : ''}} {{index === 2 ? 'icon-summary' : ''}} {{selected === index ? 'active' : ''}}">

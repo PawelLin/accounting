@@ -19,7 +19,7 @@
         </view>
     </view>
     <view class="account-view">
-        <scroll-view class="account-scroll" scroll-y="true">
+        <scroll-view class="account-scroll" scroll-y="{{!loading}}">
             <view class="scroll-space"></view>
             <view wx:for="{{list}}" wx:for-index="pindex" wx:key="key" class="account">
                 <view class="account-header">
@@ -37,6 +37,7 @@
                     </view>
                 </view>
             </view>
+            <skeleton-list wx:if="{{loading}}" skeleton-class="account account-skeleton"></skeleton-list>
             <view class="scroll-space"></view>
         </scroll-view>
     </view>

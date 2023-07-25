@@ -10,7 +10,10 @@ module.exports = {
                 try {
                     const res = result[params.name](params.data)
                     console.log(`[mock:${params.name}]: `, res)
-                    resolve(res)
+                    const timeout = setTimeout(() => {
+                        clearTimeout(timeout)
+                        resolve(res)
+                    }, 500)
                 } catch (err) {
                     reject(err)
                 }

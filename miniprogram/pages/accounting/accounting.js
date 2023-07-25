@@ -3,6 +3,7 @@ const util = require('../../utils/util.js')
 const cloud = require('../../utils/cloud/index')
 Page({
     data: {
+        loading: true,
         type: '0',
         typeList: [
             { title: '支出', key: '0' },
@@ -47,7 +48,8 @@ Page({
                 today: date,
                 payLabelList,
                 incomeLabelList,
-                labelList: this.data.type === '0' ? payLabelList : incomeLabelList
+                labelList: this.data.type === '0' ? payLabelList : incomeLabelList,
+                loading: false
             })
         }).catch(() => {})
     },

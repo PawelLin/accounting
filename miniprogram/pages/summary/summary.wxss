@@ -74,6 +74,10 @@ page {
 .label + .label {
     margin-top: 10px;
 }
+.label-skeleton::after {
+    content: '空';
+    visibility: hidden;
+}
 .title {
     width: 70px;
     flex: none;
@@ -111,19 +115,13 @@ page {
     background-color: var(--red-color);
 }
 .button-expand {
-    position: relative;
+    align-self: stretch;
     padding: 0 var(--margin-gap) 0 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex: none;
     width: 20px;
-}
-.button-expand::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: calc(100% + var(--margin-gap) * 2);
 }
 .expand-icon {
     position: relative;

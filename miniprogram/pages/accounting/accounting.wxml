@@ -10,7 +10,8 @@
             </view>
             <view wx:for="{{labelList}}" wx:key="key" data-key="{{item.key}}" data-title="{{item.title}}" bindtap="labelChange"
             class="label-item {{item.key === label ? 'active' : ''}}">{{item.title}}</view>
-            <view class="label-space"></view>
+            <skeleton-list wx:if="{{loading}}" skeleton-class="label-item label-skeleton"></skeleton-list>
+            <view class="scroll-space"></view>
         </scroll-view>
     </view>
     <view class="keyboard">
@@ -20,24 +21,24 @@
             <input value="{{remark}}" data-key="remark" bindinput="bindInput" id="remark" class="remark-input" type="text" placeholder="点击填写备注" maxlength="10" />
         </view>
         <view class="button-contain">
-            <view class="button button-number" data-key="7" bindtap="bindNumberTap">7</view>
-            <view class="button button-number" data-key="8" bindtap="bindNumberTap">8</view>
-            <view class="button button-number" data-key="9" bindtap="bindNumberTap">9</view>
+            <view class="button button-number" hover-class="button-active" data-key="7" bindtap="bindNumberTap">7</view>
+            <view class="button button-number" hover-class="button-active" data-key="8" bindtap="bindNumberTap">8</view>
+            <view class="button button-number" hover-class="button-active" data-key="9" bindtap="bindNumberTap">9</view>
             <picker class="button button-date {{date !== today ? 'not-today' : ''}}" value="{{date}}" mode="date" bindchange="bindDataChange">
                 <view class="button-date-text">{{date === today ? '今天' : date}}</view>
             </picker>
-            <view class="button button-number" data-key="4" bindtap="bindNumberTap">4</view>
-            <view class="button button-number" data-key="5" bindtap="bindNumberTap">5</view>
-            <view class="button button-number" data-key="6" bindtap="bindNumberTap">6</view>
-            <view class="button button-number" data-key="+" bindtap="bindCalcTap">+</view>
-            <view class="button button-number" data-key="1" bindtap="bindNumberTap">1</view>
-            <view class="button button-number" data-key="2" bindtap="bindNumberTap">2</view>
-            <view class="button button-number" data-key="3" bindtap="bindNumberTap">3</view>
-            <view class="button button-number" data-key="-" bindtap="bindCalcTap">-</view>
-            <view class="button button-number" data-key="." bindtap="bindPointTap">.</view>
-            <view class="button button-number" data-key="0" bindtap="bindNumberTap">0</view>
-            <view class="button" bindtap="bindDeleteTap">删除</view>
-            <view class="button {{isEqual ? 'button-number' : '' }}" bindtap="bindCompleteTap">{{isEqual ? '=' : '完成'}}</view>
+            <view class="button button-number" hover-class="button-active" data-key="4" bindtap="bindNumberTap">4</view>
+            <view class="button button-number" hover-class="button-active" data-key="5" bindtap="bindNumberTap">5</view>
+            <view class="button button-number" hover-class="button-active" data-key="6" bindtap="bindNumberTap">6</view>
+            <view class="button button-number" hover-class="button-active" data-key="+" bindtap="bindCalcTap">+</view>
+            <view class="button button-number" hover-class="button-active" data-key="1" bindtap="bindNumberTap">1</view>
+            <view class="button button-number" hover-class="button-active" data-key="2" bindtap="bindNumberTap">2</view>
+            <view class="button button-number" hover-class="button-active" data-key="3" bindtap="bindNumberTap">3</view>
+            <view class="button button-number" hover-class="button-active" data-key="-" bindtap="bindCalcTap">-</view>
+            <view class="button button-number" hover-class="button-active" data-key="." bindtap="bindPointTap">.</view>
+            <view class="button button-number" hover-class="button-active" data-key="0" bindtap="bindNumberTap">0</view>
+            <view class="button" hover-class="button-active" bindtap="bindDeleteTap">删除</view>
+            <view class="button {{isEqual ? 'button-number' : '' }}" hover-class="button-active" bindtap="bindCompleteTap">{{isEqual ? '=' : '完成'}}</view>
         </view>
     </view>
 </view>

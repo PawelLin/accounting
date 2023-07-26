@@ -1,8 +1,10 @@
+const app = getApp()
 Component({
     options: {
         addGlobalClass: true
     },
     data: {
+        theme: app.globalData.theme,
         selected: 0,
         color: "#7A7E83",
         selectedColor: "#19be6b",
@@ -24,6 +26,10 @@ Component({
         }]
     },
     attached() {
+        this.setData({ theme: app.globalData.theme })
+        app.globalData.bus.on('change-theme', theme => {
+            this.setData({ theme })
+        })
     },
     methods: {
         switchTab(e) {

@@ -3,6 +3,7 @@ const util = require('../../utils/util.js')
 const cloud = require('../../utils/cloud/index')
 Page({
     data: {
+        theme: app.globalData.theme,
         loading: true,
         list: [],
         payNumber: '0',
@@ -119,6 +120,10 @@ Page({
     onLoad(options) {
         app.openidReady().then(() => {
             this.init()
+        })
+        this.setData({ theme: app.globalData.theme })
+        app.globalData.bus.on('change-theme', theme => {
+            this.setData({ theme })
         })
     },
     /**

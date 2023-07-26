@@ -1,16 +1,22 @@
 .nav-bar {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--primary-color);
-}
-.nav-bar-name, .nav-bar-title {
-    display: inline-flex;
+    justify-content: space-between;
     align-items: center;
 }
 .nav-bar-name {
-    position: absolute;
-    left: 10px;
     font-weight: bold;
     font-size: 17px;
+}
+.button-theme {
+    padding: 5px 15px;
+}
+.button-theme-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: inset 1px 1px 10px #fff, inset -1px -1px 10px #fff;
+    transition: box-shadow 0.3s;
+}
+.button-theme-icon.dark {
+    box-shadow: inset -4px -4px 2px var(--soft-text-color);
 }

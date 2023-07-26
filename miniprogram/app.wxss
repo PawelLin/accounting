@@ -1,15 +1,24 @@
 /**app.wxss**/
 /* @import 'assets/font/DengXian.wxss'; */
 page, .page-var {
-    /* font-family: 'DengXian'; */
-    background-color: #e8f2fb;
-    --primary-color: #e8f2fb;
     --red-color: #ed4014;
     --green-color: #19be6b;
     --orange-color: #ff9900;
+    /* .page-var-light */
+    --primary-color: #e8f2fb;
+    --soft-text-color: #000;
     --soft-box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
     --soft-box-shadow-inset: inset 1px 1px 2px #d3e0ec, inset -1px -1px 2px #fff;
     --soft-text-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    --soft-text-skeleton: 1px 1px 2px rgba(211, 224, 236, 0.6), -1px -1px 2px rgba(255, 255, 255, 0.6);
+}
+.page-var-dark {
+    --primary-color: #545a61;
+    --soft-text-color: rgba(255, 255, 255, 0.7);
+    --soft-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.36), -1px -1px 2px rgba(255, 255, 255, 0.12);
+    --soft-box-shadow-inset: inset 1px 1px 2px rgba(0, 0, 0, 0.36), inset -1px -1px 2px rgba(255, 255, 255, 0.12);
+    --soft-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 var(--soft-text-color) 1px 1px 2px rgba(0, 0, 0, 0.2);
+    --soft-text-skeleton: 1px 1px 2px rgba(0, 0, 0, 0.56), -1px -1px 2px rgba(255, 255, 255, 0.32);
 }
 .scroll-space {
     height: 10px;

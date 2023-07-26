@@ -1,4 +1,4 @@
-<view class="detail">
+<view class="{{theme}} detail">
     <custom-nav-bar title="明细"></custom-nav-bar>
     <view class="header-view">
         <view class="header">

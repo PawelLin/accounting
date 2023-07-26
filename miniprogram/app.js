@@ -1,4 +1,5 @@
 // app.js
+const bus = require('./utils/eventBus')
 const cloud = require('./utils/cloud/index')
 App({
     onLaunch() {
@@ -25,5 +26,7 @@ App({
         openid: '',
         reDetail: false,
         reSummary: false,
+        theme: new Date().getHours() > 18 ? 'page-var-dark' : '',
+        bus,
     }
 })

@@ -7,7 +7,10 @@ page {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    color: var(--soft-text-color);
     text-shadow: var(--soft-text-shadow);
+    background-color: var(--primary-color);
+    transition: background-color 0.3s;
 }
 .type {
     display: flex;

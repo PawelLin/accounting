@@ -7,7 +7,10 @@ page {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    text-shadow: 1px 1px 2px #fff, 0 0 0 rgba(0, 0, 0, 0.2), 1px 1px 2px #fff;
+    text-shadow: var(--soft-text-shadow);
+    color: var(--soft-text-color);
+    background-color: var(--primary-color);
+    transition: background-color 0.3s;
 }
 .header-view {
     padding: 0 10px;
@@ -16,7 +19,7 @@ page {
     padding: 8px 0;
     display: flex;
     border-radius: 10px;
-    box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
+    box-shadow: var(--soft-box-shadow);
 }
 .header-item {
     display: flex;
@@ -57,7 +60,7 @@ page {
     padding: 6px 10px;
     border-radius: 10px;
     text-shadow: var(--soft-text-shadow);
-    box-shadow: 1px 1px 2px #d3e0ec, -1px -1px 2px #fff;
+    box-shadow: var(--soft-box-shadow);
 }
 .account + .account {
     margin-top: 10px;

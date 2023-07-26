@@ -1,4 +1,4 @@
-<view class="accounting">
+<view class="{{theme}} accounting">
     <custom-nav-bar title="记账"></custom-nav-bar>
     <view class="type">
         <view wx:for="{{typeList}}" wx:key="key" data-key="{{item.key}}" bindtap="typeChange" class="type-item {{item.key === type ? 'active' : ''}}">{{item.title}}</view>

@@ -8,6 +8,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        theme: app.globalData.theme,
         loading: true,
         pickDate: {
             date: '',
@@ -42,6 +43,9 @@ Page({
         app.openidReady().then(() => {
             this.getSummaryData(new Date())
         })
+        app.globalData.bus.on('change-theme', theme => {
+            this.setData({ theme })
+        })
     },
 
     /**
@@ -64,6 +68,7 @@ Page({
             this.getSummaryData(this.data.pickDate.date)
             app.globalData.reSummary = false
         }
+        this.setData({ theme: app.globalData.theme })
     },
 
     /**

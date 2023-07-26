@@ -3,6 +3,7 @@ const util = require('../../utils/util.js')
 const cloud = require('../../utils/cloud/index')
 Page({
     data: {
+        theme: app.globalData.theme,
         loading: true,
         type: '0',
         typeList: [
@@ -25,6 +26,10 @@ Page({
     onLoad() {
         app.openidReady().then(() => {
             this.initData()
+        })
+        this.setData({ theme: app.globalData.theme })
+        app.globalData.bus.on('change-theme', theme => {
+            this.setData({ theme })
         })
     },
     onShow() {

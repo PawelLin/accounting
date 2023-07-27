@@ -14,8 +14,10 @@
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    box-shadow: inset 1px 1px 10px #fff, inset -1px -1px 10px #fff;
     transition: box-shadow 0.3s;
+}
+.button-theme-icon.light {
+    box-shadow: inset 1px 1px 10px #fff, inset -1px -1px 10px #fff;
 }
 .button-theme-icon.dark {
     box-shadow: inset -4px -4px 2px var(--soft-text-color);

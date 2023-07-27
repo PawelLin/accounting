@@ -2,11 +2,9 @@
 const app = getApp()
 const util = require('../../utils/util')
 const cloud = require('../../utils/cloud/index')
+const payKey = '0'
+const incomeKey = '1'
 Page({
-
-    /**
-     * 页面的初始数据
-     */
     data: {
         theme: app.globalData.theme,
         loading: true,
@@ -15,10 +13,10 @@ Page({
             year: '',
             month: ''
         },
-        selectType: '1',
+        selectType: payKey,
         isPay: true,
-        payKey: '1',
-        incomeKey: '2',
+        payKey,
+        incomeKey,
         count: {
             pay: 0,
             payRatio: 0,
@@ -30,34 +28,17 @@ Page({
         payList: [],
         incomeList: [],
         list: [
-            { key: '1', list: [] },
-            { key: '2', list: [] },
+            { key: payKey, list: [] },
+            { key: incomeKey, list: [] },
         ],
         week: ['日', '一', '二', '三', '四', '五', '六']
     },
-
-    /**
-     * 生命周期函数--监听页面加载
-     */
     onLoad(options) {
-        app.openidReady().then(() => {
-            this.getSummaryData(new Date())
-        })
+        this.getSummaryData(new Date())
         app.globalData.bus.on('change-theme', theme => {
             this.setData({ theme })
         })
     },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
     onShow() {
         if (typeof this.getTabBar === 'function' && this.getTabBar()) {
             this.getTabBar().setData({
@@ -69,41 +50,6 @@ Page({
             app.globalData.reSummary = false
         }
         this.setData({ theme: app.globalData.theme })
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
     },
     getMonthData (date) {
         date.setDate(1)
@@ -139,9 +85,10 @@ Page({
             pickDate: { date: dateStr, year, month },
         })
         const { beforeLength, days } = this.getMonthData(date)
+        this.maxLine = Math.ceil((beforeLength + days) / 7)
         cloud.callFunction({
             name: 'getBill',
-            data: { date: dateStr, openid: app.globalData.openid }
+            data: { date: dateStr }
         }).then(res => {
             const payDatas = {}
             const incomeDatas = {}
@@ -153,11 +100,12 @@ Page({
                     title: item.labelTitle,
                     label: item.label,
                     expand: false,
+                    showList: false,
                     pay: 0,
                     payRatio: 0,
                     income: 0,
                     incomeRatio: 0,
-                    maxLine: Math.ceil((beforeLength + days) / 7),
+                    animationData: {},
                     list: [
                         ...Array.from(Array(beforeLength)).map((item, index) => ({ key: index + 1 })),
                         ...Array.from(Array(days)).map((item, index) => ({
@@ -204,8 +152,29 @@ Page({
     onExpandChange (e) {
         const { index, expand } = e.currentTarget.dataset
         const typeIndex = this.data.isPay ? 0 : 1
-        this.setData({
-            [`list[${typeIndex}].list[${index}].expand`]: !expand
+        const duration = 300
+        const animation = this.animation || wx.createAnimation({
+            duration,
+            timingFunction: 'ease-in-out',
         })
+        const height = expand ? 0 : `calc(${this.maxLine} * 12vw + ${this.maxLine} * var(--margin-gap))`
+        animation.height(height).step()
+        if (expand) {
+            this.setData({
+                [`list[${typeIndex}].list[${index}].expand`]: !expand,
+                [`list[${typeIndex}].list[${index}].animationData`]: animation.export()
+            })
+            setTimeout(() => {
+                this.setData({
+                    [`list[${typeIndex}].list[${index}].showList`]: !expand
+                })
+            }, duration)
+        } else {
+            this.setData({
+                [`list[${typeIndex}].list[${index}].expand`]: !expand,
+                [`list[${typeIndex}].list[${index}].showList`]: !expand,
+                [`list[${typeIndex}].list[${index}].animationData`]: animation.export()
+            })
+        }
     }
 })

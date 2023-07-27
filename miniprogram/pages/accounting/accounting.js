@@ -24,10 +24,7 @@ Page({
         isEqual: false
     },
     onLoad() {
-        app.openidReady().then(() => {
-            this.initData()
-        })
-        this.setData({ theme: app.globalData.theme })
+        this.initData()
         app.globalData.bus.on('change-theme', theme => {
             this.setData({ theme })
         })
@@ -38,11 +35,11 @@ Page({
                 selected: 1
             })
         }
+        this.setData({ theme: app.globalData.theme })
     },
     initData () {
         cloud.callFunction({
-            name: 'getLabel',
-            data: { openid: app.globalData.openid }
+            name: 'getLabel'
         }).then(res => {
             const data = res.result.data
             const payLabelList = data.filter(item => item.type === '0').reverse().map(item => ({ ...item, key: item._id }))
@@ -148,7 +145,7 @@ Page({
             const params = { type, label, labelTitle, amount: +amount, remark, date, time: Date.now() }
             await cloud.callFunction({
                 name: 'addBill',
-                data: { data: { ...params, openid: app.globalData.openid } }
+                data: { data: params }
             })
             this.setData({
                 amount: '0',
@@ -188,7 +185,7 @@ Page({
         const labelItem = { title: labelCustom, type }
         return cloud.callFunction({
             name: 'addLabel',
-            data: { data: { ...labelItem, openid: app.globalData.openid } }
+            data: { data: labelItem }
         }).then(res => {
             labelItem.key = res.result._id
             const labelList = [labelItem, ...(isPay ? payLabelList : incomeLabelList)]

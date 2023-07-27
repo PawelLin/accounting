@@ -17,6 +17,24 @@ Page({
         payLabelList: null,
         incomeLabelList: null,
     },
+    onLoad() {
+        this.init()
+        app.globalData.bus.on('change-theme', theme => {
+            this.setData({ theme })
+        })
+    },
+    onShow() {
+        if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+            this.getTabBar().setData({
+                selected: 0
+            })
+        }
+        if (app.globalData.reDetail) {
+            this.init(true)
+            app.globalData.reDetail = false
+        }
+        this.setData({ theme: app.globalData.theme })
+    },
     bindPickDataChange (e) {
         this.setPickData(e.detail.value)
     },
@@ -32,8 +50,7 @@ Page({
         let incomeLabelList = []
         if (reInit || !this.data.payLabelList || !this.data.incomeLabelList) {
             await cloud.callFunction({
-                name: 'getLabel',
-                data: { openid: app.globalData.openid }
+                name: 'getLabel'
             }).then(res => {
                 const data = res.result.data
                 payLabelList = data.filter(item => item.type === '0').reverse().map(item => ({ ...item, key: item._id }))
@@ -49,7 +66,7 @@ Page({
         }
         cloud.callFunction({
             name: 'getBill',
-            data: { date: month, openid: app.globalData.openid }
+            data: { date: month }
         }).then(res => {
             const data = {}
             res.result.data.forEach(item => {
@@ -114,35 +131,4 @@ Page({
         const date = util.formatDate(new Date(), 'yyyy-MM')
         this.setPickData(date, reInit)
     },
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad(options) {
-        app.openidReady().then(() => {
-            this.init()
-        })
-        this.setData({ theme: app.globalData.theme })
-        app.globalData.bus.on('change-theme', theme => {
-            this.setData({ theme })
-        })
-    },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-    },
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-        if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-            this.getTabBar().setData({
-                selected: 0
-            })
-        }
-        if (app.globalData.reDetail) {
-            this.init(true)
-            app.globalData.reDetail = false
-        }
-    }
 })

@@ -10,7 +10,7 @@ page {
     text-shadow: var(--soft-text-shadow);
     color: var(--soft-text-color);
     background-color: var(--primary-color);
-    transition: background-color 0.3s;
+    transition: background-color var(--theme-switch-duration) var(--theme-switch-timing-function);
 }
 .header-view {
     padding: 0 10px;
@@ -20,6 +20,7 @@ page {
     display: flex;
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
+    transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
 }
 .header-item {
     display: flex;
@@ -49,6 +50,7 @@ page {
     height: 100%;
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow-inset);
+    transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
 }
 .account-skeleton {
     height: 108px;
@@ -59,14 +61,11 @@ page {
     margin: 0 10px;
     padding: 6px 10px;
     border-radius: 10px;
-    text-shadow: var(--soft-text-shadow);
     box-shadow: var(--soft-box-shadow);
+    transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
 }
 .account + .account {
     margin-top: 10px;
-}
-.account.current {
-    box-shadow: inset 1px 1px 2px #d3e0ec, inset -1px -1px 2px #fff;
 }
 .account-header {
     display: flex;

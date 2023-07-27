@@ -4,6 +4,8 @@ page, .page-var {
     --red-color: #ed4014;
     --green-color: #19be6b;
     --orange-color: #ff9900;
+    --theme-switch-duration: 0.3s;
+    --theme-switch-timing-function: ease-in-out;
     /* .page-var-light */
     --primary-color: #e8f2fb;
     --soft-text-color: #000;

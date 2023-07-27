@@ -18,25 +18,29 @@
             <view class="scroll-space"></view>
             <view wx:for="{{list}}" wx:key="key" class="label-content {{selectType !== item.key ? 'none' : ''}}">
                 <view wx:for="{{item.list}}" wx:key="label" class="label {{item.expand ? 'expand' : ''}}">
-                    <view class="title">{{item.title}}</view>
-                    <view class="count">
-                        <view class="count-item count-pay {{isPay ? 'count-pay' : 'count-income'}}">
-                            <view class="count-value {{isPay ? 'count-pay-value' : 'count-income-value'}}" style="min-width: {{(isPay ? item.payRatio : item.incomeRatio) + '%'}};">
-                                {{isPay ? item.pay : item.income}}
+                    <view class="label-header">
+                        <view class="title">{{item.title}}</view>
+                        <view class="count">
+                            <view class="count-item count-pay {{isPay ? 'count-pay' : 'count-income'}}">
+                                <view class="count-value {{isPay ? 'count-pay-value' : 'count-income-value'}}" style="min-width: {{(isPay ? item.payRatio : item.incomeRatio) + '%'}};">
+                                    {{isPay ? item.pay : item.income}}
+                                </view>
                             </view>
                         </view>
-                    </view>
-                    <view class="button-expand" data-index="{{index}}" data-expand="{{item.expand}}" bindtap="onExpandChange">
-                        <view class="expand-icon {{isPay ? 'expand-icon-pay' : 'expand-icon-income'}} {{item.expand ? 'expand-active' : ''}}"></view>
-                    </view>
-                    <view class="list" style="{{item.expand ? 'height: calc(' + item.maxLine + ' * 12vw + ' + item.maxLine + ' * var(--margin-gap));' : ''}}">
-                        <view wx:for="{{item.list}}" wx:key="key" class="detail {{(isPay && !item.pay) || (!isPay && !item.income) ? '' : 'detail-trade'}}">
-                            <view class="value day">
-                                <text>{{item.day}}</text>
-                                <text>{{index < 7 ? week[index] : ''}}</text>
-                            </view>
-                            <view class="value {{isPay ? 'pay' : 'income'}} {{(isPay && !item.pay) || (!isPay && !item.income) ? 'hidden' : ''}}">{{(isPay ? item.pay : item.income) || 0}}</view>
+                        <view class="button-expand" data-index="{{index}}" data-expand="{{item.expand}}" bindtap="onExpandChange">
+                            <view class="expand-icon {{isPay ? 'expand-icon-pay' : 'expand-icon-income'}} {{item.expand ? 'expand-active' : ''}}"></view>
                         </view>
+                    </view>
+                    <view class="list" animation="{{item.animationData}}">
+                        <block wx:if="{{item.showList}}">
+                            <view wx:for="{{item.list}}" wx:key="key" class="detail {{(isPay && !item.pay) || (!isPay && !item.income) ? '' : 'detail-trade'}}">
+                                <view class="value day">
+                                    <text>{{item.day}}</text>
+                                    <text>{{index < 7 ? week[index] : ''}}</text>
+                                </view>
+                                <view class="value {{isPay ? 'pay' : 'income'}} {{(isPay && !item.pay) || (!isPay && !item.income) ? 'hidden' : ''}}">{{(isPay ? item.pay : item.income) || 0}}</view>
+                            </view>
+                        </block>
                     </view>
                 </view>
                 <skeleton-list wx:if="{{loading}}" skeleton-class="label label-skeleton"></skeleton-list>

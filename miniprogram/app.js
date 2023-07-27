@@ -26,7 +26,7 @@ App({
         openid: '',
         reDetail: false,
         reSummary: false,
-        theme: new Date().getHours() > 18 ? 'page-var-dark' : '',
+        theme: Math.abs(new Date().getHours() - 12) > 6 ? 'page-var-dark' : '',
         bus,
     }
 })

@@ -13,18 +13,17 @@ async function getMonthAll (event, openid) {
         type,
         openid
     }).field({ openid: false })
-    const { total } = await bill.count()
+    const { total, errMsg } = await bill.count()
     const batchTimes = Math.ceil(total / MAX_LIMIT)
     const tasks = []
     for (let i = 0; i < batchTimes; i++) {
         const promise = bill.skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
         tasks.push(promise)
     }
-    return (await Promise.all(tasks)).reduce((acc, cur) => ({
+    return total > 0 ? (await Promise.all(tasks)).reduce((acc, cur) => ({
           data: acc.data.concat(cur.data),
           errMsg: acc.errMsg,
-        })
-    )
+        })) : { data: [], errMsg }
 }
 
 // 云函数入口函数

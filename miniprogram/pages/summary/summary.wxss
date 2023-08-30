@@ -73,7 +73,7 @@ page {
     padding: var(--margin-gap) 0 var(--margin-gap) var(--margin-gap);
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
-    transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
+    transition: opacity 0.3s ease-in-out, box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
 }
 .label + .label {
     margin-top: 10px;
@@ -84,6 +84,9 @@ page {
 }
 .label-header {
     display: flex;
+}
+.label-unchecked {
+    opacity: 0.3;
 }
 .title {
     width: 70px;
@@ -113,7 +116,7 @@ page {
     color: #fff;
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
-    transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
+    transition: min-width 0.3s ease-in-out, background 0.3s ease-in-out, box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
     box-sizing: border-box;
     text-shadow: none;
 }
@@ -122,6 +125,10 @@ page {
 }
 .count-income-value {
     background-color: var(--red-color);
+}
+.count-value-none {
+    background-color: transparent;
+    box-shadow: none;
 }
 .button-expand {
     align-self: stretch;

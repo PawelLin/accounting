@@ -100,6 +100,7 @@ Page({
                     title: item.labelTitle,
                     label: item.label,
                     expand: false,
+                    checked: true,
                     showList: false,
                     pay: 0,
                     payRatio: 0,
@@ -176,5 +177,23 @@ Page({
                 [`list[${typeIndex}].list[${index}].animationData`]: animation.export()
             })
         }
+    },
+    onCheckedChange (e) {
+        const { index, checked } = e.currentTarget.dataset
+        const isPay = this.data.isPay
+        const type = isPay ? 'pay' : 'income'
+        const typeRatio = isPay ? 'payRatio' : 'incomeRatio'
+        const typeCountFormat = isPay ? 'payFormat' : 'incomeFormat'
+        const typeIndex = isPay ? 0 : 1
+        const list = this.data.list[`${typeIndex}`].list
+        const checkedCount = list.map((item, index1) => (index === index1 ? !checked : item.checked) ? item[type] : 0).reduce((a, b) => util.numberAddition(a, b))
+        const data = {
+            [`list[${typeIndex}].list[${index}].checked`]: !checked,
+            [`count.${typeCountFormat}`]: util.formatAmount(checkedCount),
+        }
+        list.forEach((item, index1) => {
+            data[`list[${typeIndex}].list[${index1}].${typeRatio}`] = (index === index1 ? !checked : item.checked) ? (item[type] / checkedCount * 100) : 0
+        })
+        this.setData(data)
     }
 })

@@ -100,12 +100,16 @@ Page({
     bindNumberTap (e) {
         const amount = this.data.amount
         const data = e.currentTarget.dataset
+        if (amount.match(/[^\d\.]0[^.]/)) return
         this.setAmount(`${amount === '0' ? '' : amount}${data.key}`)
     },
     bindDeleteTap () {
         let amount = this.data.amount
         const length = amount.length
         this.setAmount(length === 1 ? '0' : amount.substring(0, length - 1))
+    },
+    bindClearTap () {
+        this.setAmount('0', { isEqual: false })
     },
     bindPointTap (e) {
         const amount = this.data.amount
@@ -118,11 +122,11 @@ Page({
     bindCalcTap (e) {
         let amount = this.data.amount
         const key = e.currentTarget.dataset.key
-        const calc = ['+', '-']
+        const calc = ['+', '-', '÷', '×']
         if (calc.includes(amount[amount.length - 1])) {
             amount = amount.substring(0, amount.length - 1)
         } else {
-            if (amount.includes('+') || amount.includes('-')) {
+            if (amount.match(/[^\d\.]/)) {
                 amount = this.calcAmount()
             }
         }
@@ -199,9 +203,23 @@ Page({
     },
     calcAmount () {
         let amount = this.data.amount
-        const calcs = amount.split(/([+-.\d]+)([+-]+)/).filter(item => item)
-        const isAdd = calcs[1] === '+'
-        amount = util[isAdd ? 'numberAddition' : 'numberSubtract'](calcs[0], calcs[2])
+        const calcs = amount.split(/([\.\d]+)/).filter(Boolean)
+        if (calcs[1] === '÷' && Number(calcs[2]) === 0) {
+            wx.showToast({
+                title: '不能除以0',
+                icon: 'none'
+            })
+            throw new Error('不能除以0')
+        }
+        const calcFun = {
+            '+': 'numberAddition',
+            '-': 'numberSubtract',
+            '×': 'numberMultiply',
+            '÷': 'numberDivision'
+        }[calcs[1]]
+        if (calcFun) {
+            amount = util[calcFun](calcs[0], calcs[2])
+        }
         return `${amount}`
     },
     setAmount (amount, extra = {}) {

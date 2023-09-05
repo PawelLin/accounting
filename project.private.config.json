@@ -13,6 +13,13 @@
                     "query": "",
                     "launchMode": "default",
                     "scene": null
+                },
+                {
+                    "name": "记账",
+                    "pathName": "pages/accounting/accounting",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
                 }
             ]
         }

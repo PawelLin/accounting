@@ -1,3 +1,5 @@
+import calc from './calc'
+
 const formatDate = (date, format = 'yyyy-MM-dd') => {
     if (date) {
         date = date instanceof Date ? date : new Date(date)
@@ -103,8 +105,10 @@ module.exports = {
     formatAmount,
     padEndAmount,
     formatAmountPadEnd,
-    numberAddition,
-    numberSubtract,
+    numberAddition: (...args) => calc.add(...args),
+    numberSubtract: (...args) => calc.sub(...args),
+    numberMultiply: (...args) => calc.mul(...args),
+    numberDivision: (...args) => calc.div(...args),
     getStorage,
     setStorage,
     debounce

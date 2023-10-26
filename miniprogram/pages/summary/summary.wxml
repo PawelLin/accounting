@@ -17,12 +17,12 @@
         <scroll-view class="content-scroll" scroll-y="true">
             <view class="scroll-space"></view>
             <view wx:for="{{list}}" wx:key="key" class="label-content {{selectType !== item.key ? 'none' : ''}}">
-                <view wx:for="{{item.list}}" wx:key="label" class="label {{item.expand ? 'expand' : ''}}">
+                <view wx:for="{{item.list}}" wx:key="label" class="label {{item.checked ? '' : 'label-unchecked'}}">
                     <view class="label-header">
-                        <view class="title">{{item.title}}</view>
+                        <view class="title" data-index="{{index}}" data-checked="{{item.checked}}" bindtap="onCheckedChange">{{item.title}}</view>
                         <view class="count">
                             <view class="count-item count-pay {{isPay ? 'count-pay' : 'count-income'}}">
-                                <view class="count-value {{isPay ? 'count-pay-value' : 'count-income-value'}}" style="min-width: {{(isPay ? item.payRatio : item.incomeRatio) + '%'}};">
+                                <view class="count-value {{isPay ? 'count-pay-value' : 'count-income-value'}} {{item.checked ? '' : 'count-value-none'}}" style="min-width: {{(isPay ? item.payRatio : item.incomeRatio) + '%'}};">
                                     {{isPay ? item.pay : item.income}}
                                 </view>
                             </view>

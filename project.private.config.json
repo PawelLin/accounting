@@ -3,5 +3,25 @@
     "projectname": "accounting",
     "setting": {
         "compileHotReLoad": true
+    },
+    "condition": {
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "汇总",
+                    "pathName": "pages/summary/summary",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "记账",
+                    "pathName": "pages/accounting/accounting",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                }
+            ]
+        }
     }
 }

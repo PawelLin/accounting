@@ -7,10 +7,10 @@ const db = cloud.database()
 const $ = db.command.aggregate
 // 云函数入口函数
 exports.main = async (event, context) => {
-    const { year, type } = event
+    const { date, type } = event
     const { OPENID } = cloud.getWXContext()
     const result = await db.collection('bill').aggregate().limit(1000).match({
-        date: db.RegExp({ regexp: year }),
+        date: db.RegExp({ regexp: date }),
         type,
         openid: OPENID
     }).addFields({
@@ -30,6 +30,6 @@ exports.main = async (event, context) => {
         type: '$_id.type',
         date: '$_id.month',
         amount: 1
-    }).end()
+    }).end().then(res => ({ data: res.list, errMsg: res.errMsg }))
     return result
 }

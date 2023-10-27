@@ -9,7 +9,7 @@ module.exports = {
             return new Promise((resolve, reject) => {
                 try {
                     const res = result[params.name](params.data)
-                    console.log(`[mock:${params.name}]: `, res)
+                    console.log(`[mock:${params.name}]: `, params.data, res)
                     const timeout = setTimeout(() => {
                         clearTimeout(timeout)
                         resolve(res)

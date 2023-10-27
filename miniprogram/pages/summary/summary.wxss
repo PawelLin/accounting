@@ -20,13 +20,18 @@ page {
 }
 .header-date {
     padding: var(--margin-gap);
-    width: 100px;
     display: flex;
     border-radius: 10px;
     white-space: nowrap;
     box-shadow: var(--soft-box-shadow);
     box-sizing: border-box;
     transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
+}
+.header-year {
+    width: 65px;
+}
+.header-month {
+    width: 45px;
 }
 .header-type {
     display: flex;
@@ -184,11 +189,20 @@ page {
     border-radius: 10px;
     box-sizing: border-box;
 }
+.detail-year {
+    padding: 3vw 0;
+    width: 14vw;
+    height: 14vw;
+    align-items: center;
+}
 .detail-trade {
     box-shadow: var(--soft-box-shadow-inset);
     transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
 }
-.detail:not(:nth-child(7n + 1)) {
+.detail-year:not(:nth-child(6n + 1)) {
+    margin-left: var(--margin-gap);
+}
+.detail-month:not(:nth-child(7n + 1)) {
     margin-left: var(--margin-gap);
 }
 .value {
@@ -198,6 +212,7 @@ page {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
+    white-space: nowrap;
 }
 .pay {
     text-align: right;

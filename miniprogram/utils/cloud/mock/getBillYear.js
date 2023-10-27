@@ -1,7 +1,7 @@
 import { payLabels, incomeLabels } from './getLabel'
 
 export default params => {
-    const year = params.year
+    const year = params.date
     return {
         result: {
             data: [

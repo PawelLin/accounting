@@ -13,6 +13,7 @@ Page({
             year: '',
             month: ''
         },
+        isAllYear: false,
         selectType: payKey,
         isPay: true,
         payKey,
@@ -31,10 +32,16 @@ Page({
             { key: payKey, list: [] },
             { key: incomeKey, list: [] },
         ],
-        week: ['日', '一', '二', '三', '四', '五', '六']
+        week: ['日', '一', '二', '三', '四', '五', '六'],
+        monthList: Array.from(Array(13)).map((num, index) => {
+            const key =  index.toString().padStart(2, 0)
+            return { key, value: index ? `${key}月` : '全年' }
+        })
     },
     onLoad(options) {
-        this.getSummaryData(new Date())
+        const [year, month] = util.formatDate(new Date(), 'yyyy-MM').split('-')
+        this.setData({ pickDate: { year, month } })
+        this.getSummaryData(`${year}-${month}`)
         app.globalData.bus.on('change-theme', theme => {
             this.setData({ theme })
         })
@@ -52,6 +59,7 @@ Page({
         this.setData({ theme: app.globalData.theme })
     },
     getMonthData (date) {
+        date = typeof date === 'string' ? new Date(date) : date
         date.setDate(1)
         const beforeLength = date.getDay()
         date.setMonth(date.getMonth() + 1)
@@ -78,18 +86,15 @@ Page({
         }).sort((a, b) => b[type] - a[type])
     },
     getSummaryData (date) {
-        date = typeof date === 'string' ? new Date(date) : date
-        const dateStr = util.formatDate(date, 'yyyy-MM')
-        const [year, month] = dateStr.split('-')
-        this.setData({
-            pickDate: { date: dateStr, year, month },
-        })
-        const { beforeLength, days } = this.getMonthData(date)
-        this.maxLine = Math.ceil((beforeLength + days) / 7)
+        const isAllYear = this.data.isAllYear
+        const name = isAllYear ? 'getBillYear' : 'getBill'
+        const { beforeLength, days } = isAllYear ? { beforeLength: 0, days: 12 } : this.getMonthData(date)
+        this.maxLine = isAllYear ? 2 : Math.ceil((beforeLength + days) / 7)
         cloud.callFunction({
-            name: 'getBill',
-            data: { date: dateStr }
+            name,
+            data: { date }
         }).then(res => {
+            console.log(res)
             const payDatas = {}
             const incomeDatas = {}
             const countDatas = { pay: 0, payRatio: 0, income: 0, incomeRatio: 0, count: 0 }
@@ -107,17 +112,18 @@ Page({
                     income: 0,
                     incomeRatio: 0,
                     animationData: {},
+                    key: util.uuid(),
                     list: [
                         ...Array.from(Array(beforeLength)).map((item, index) => ({ key: index + 1 })),
                         ...Array.from(Array(days)).map((item, index) => ({
-                            day: index + 1,
+                            day: isAllYear ? `${(index + 1).toString().padStart(2, 0)}月` : index + 1,
                             pay: 0,
                             income: 0,
                             key: beforeLength + index + 1
                         }))
                     ]
                 }
-                const index = item.date.split('-')[2] - 1 + beforeLength
+                const index = item.date.split('-')[isAllYear ? 1 : 2] - 1 + beforeLength
                 const trade = isPay ? 'pay' : 'income'
                 const amount = Math.abs(item.amount)
                 countDatas[trade] = util.numberAddition(countDatas[trade], amount)
@@ -141,6 +147,17 @@ Page({
     bindPickDateChange (e) {
         this.getSummaryData(e.detail.value)
     },
+    bindPickYearChange (e) {
+        const year = e.detail.value
+        this.setData({ 'pickDate.year': year })
+        this.getSummaryData(`${year}-${this.data.pickDate.month}`)
+    },
+    bindPickMonthChange (e) {
+        const month = this.data.monthList[e.detail.value].key
+        const isAllYear = month === '00'
+        this.setData({ 'pickDate.month': month, isAllYear })
+        this.getSummaryData(isAllYear ? this.data.pickDate.year : `${this.data.pickDate.year}-${month}`)
+    },
     onSelectChange (e) {
         const { value } = e.currentTarget.dataset
         if (this.data.selectType !== value) {
@@ -158,7 +175,8 @@ Page({
             duration,
             timingFunction: 'ease-in-out',
         })
-        const height = expand ? 0 : `calc(${this.maxLine} * 12vw + ${this.maxLine} * var(--margin-gap))`
+        const width = this.data.isAllYear ? 14 : 12
+        const height = expand ? 0 : `calc(${this.maxLine} * ${width}vw + ${this.maxLine} * var(--margin-gap))`
         animation.height(height).step()
         if (expand) {
             this.setData({

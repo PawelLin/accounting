@@ -1,0 +1,16 @@
+<view class="skew-bar-list">
+    <view wx:for="{{list}}" style="--height: {{item.percent}}px;{{!index ? 'margin-top:0;' : ''}}" class="skew-bar-container" wx:key="title">
+        <view style="flex: {{item.flexStart}}"></view>
+        <view class="skew-bar">
+            <view class="skew-bar-item skew-bar-left"></view>
+            <view class="skew-bar-item skew-bar-right"></view>
+            <view class="skew-bar-top">
+                <view class="skew-bar-title">{{item.title}}</view>
+            </view>
+            <view class="skew-bar-shadow">
+                <view class="skew-bar-value">{{item.value}}</view>
+            </view>
+        </view>
+        <view style="flex: {{item.flexEnd}}"></view>
+    </view>
+</view>

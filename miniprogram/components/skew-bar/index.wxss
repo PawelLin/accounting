@@ -1,0 +1,74 @@
+.skew-bar-list {
+    margin: 0 60px 20px 10px;
+}
+.skew-bar-container {
+    display: flex;
+    --height: 100px;
+    margin-top: calc(20px - var(--height));
+    height: var(--height);
+}
+.skew-bar-container:first-child {
+    padding-top: calc(100px - var(--height));
+}
+.skew-bar {
+    position: relative;
+    width: 50px;
+    height: var(--height);
+}
+.skew-bar-item {
+    position: absolute;
+    transition: height 1.2s ease-in-out, bottom 1.2s ease-in-out;
+}
+.skew-bar-left {
+    bottom: 6px;
+    bottom: calc(var(--height) * 0.06);
+    left: 0;
+    width: 35px;
+    height: 78px;
+    height: calc(var(--height) * 0.78);
+    background: linear-gradient(180deg, #f68269, #f7c7b0);
+    transform: skew(0, 20deg);
+}
+.skew-bar-right {
+    bottom: calc(calc(var(--height) * 0.06) - 1px);
+    right: 0;
+    width: 16px;
+    height: calc(var(--height) * 0.78);
+    background: linear-gradient(180deg, #f1684c, #f1b280);
+    transform: skew(0, -32deg);
+}
+.skew-bar-top {
+    position: absolute;
+    bottom: calc(var(--height) * 0.84);
+    left: 8px;
+    width: 34px;
+    height: 10px;
+    color: #823123;
+    transform: skew(-57deg, 20deg);
+    background-color: #fcc5b2;
+    transition: bottom 1.2s ease-in-out;
+}
+.skew-bar-title {
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    font-size: 8px;
+    transform: translateY(-50%);
+}
+.skew-bar-shadow {
+    position: absolute;
+    bottom: calc(calc(var(--height) * 0.06) - 15px);
+    left: 42px;
+    width: 50px;
+    height: 10px;
+    transform: skew(-57deg, 20deg);
+    background-color: #f5d5b7;
+}
+.skew-bar-value {
+    position: absolute;
+    padding-left: 2px;
+    top: 50%;
+    font-size: 9.5px;
+    font-weight: bold;
+    transform: translateY(-50%);
+}

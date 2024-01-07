@@ -1,5 +1,9 @@
 import { payLabels, incomeLabels } from './getLabel'
 
+function getRandom (length, down) {
+    return Math[down ? 'floor' : 'ceil'](Math.random() * length)
+}
+
 export default params => {
     const year = params.date
     return {
@@ -14,6 +18,7 @@ export default params => {
                         date: `${year}-${month}`,
                         label,
                         labelTitle,
+                        time: new Date(`${year}/${getRandom(12)}/${getRandom(28)} ${getRandom(23)}:${getRandom(59)}:${getRandom(59)}`).getTime(),
                         type: '0'
                     }
                 }),

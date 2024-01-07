@@ -20,7 +20,8 @@ exports.main = async (event, context) => {
             label: '$label',
             labelTitle: '$labelTitle',
             type: '$type',
-            month: '$month'
+            month: '$month',
+            time: '$time'
         },
         amount: $.sum('$amount')
     }).project({
@@ -29,6 +30,7 @@ exports.main = async (event, context) => {
         labelTitle: '$_id.labelTitle',
         type: '$_id.type',
         date: '$_id.month',
+        time: '$_id.time',
         amount: 1
     }).end().then(res => ({ data: res.list, errMsg: res.errMsg }))
     return result

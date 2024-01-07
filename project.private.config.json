@@ -20,6 +20,13 @@
                     "query": "",
                     "launchMode": "default",
                     "scene": null
+                },
+                {
+                    "name": "年账单",
+                    "pathName": "pages/annual/annual",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
                 }
             ]
         }

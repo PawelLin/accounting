@@ -22,3 +22,6 @@
 .button-theme-icon.dark {
     box-shadow: inset -4px -4px 2px var(--soft-text-color);
 }
+.button-year {
+    margin-left: auto;
+}

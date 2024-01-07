@@ -3,7 +3,8 @@
         "pages/detail/detail",
         "pages/accounting/accounting",
         "pages/trend/trend",
-        "pages/summary/summary"
+        "pages/summary/summary",
+        "pages/annual/annual"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -13,16 +14,20 @@
     },
     "tabBar": {
         "custom": true,
-        "list": [{
-            "pagePath": "pages/detail/detail",
-            "text": "明细"
-        }, {
-            "pagePath": "pages/accounting/accounting",
-            "text": "记账"
-        }, {
-            "pagePath": "pages/summary/summary",
-            "text": "汇总"
-        }]
+        "list": [
+            {
+                "pagePath": "pages/detail/detail",
+                "text": "明细"
+            },
+            {
+                "pagePath": "pages/accounting/accounting",
+                "text": "记账"
+            },
+            {
+                "pagePath": "pages/summary/summary",
+                "text": "汇总"
+            }
+        ]
     },
     "style": "v2",
     "sitemapLocation": "sitemap.json",

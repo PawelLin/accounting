@@ -2,6 +2,7 @@
     <view class="nav-bar-name">
         若㩼钱 - {{title}}
     </view>
+    <view class="button-year" bindtap="onYear">年账单</view>
     <view class="button-theme" bindtap="onThemeChange">
         <view class="button-theme-icon {{theme}}"></view>
     </view>

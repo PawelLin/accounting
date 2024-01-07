@@ -1,0 +1,30 @@
+<view class="annual">
+    <view class="annual-top">
+        <view class="annual-year">
+            2023<text class="annual-unit">这一年你记录了</text>
+        </view>
+        <view class="annual-label">
+            最早一笔<text class="annual-unit">{{earliest.date}}</text>
+        </view>
+        <view class="annual-value">
+            {{earliest.value}}元<text class="annual-unit">{{earliest.label}}</text>
+        </view>
+        <view class="annual-label">
+            最晚一笔<text class="annual-unit">{{latest.date}}</text>
+        </view>
+        <view class="annual-value">
+            {{latest.value}}元<text class="annual-unit">{{latest.label}}</text>
+        </view>
+    </view>
+    <skew-bar data="{{list}}" class="annual-bar" />
+    <view class="annual-bottom">
+        <view class="annual-label">最贵一笔</view>
+        <view class="annual-value">
+            <text class="annual-unit">{{most.label}}</text>{{most.value}}元
+        </view>
+        <view class="annual-label">消费一共</view>
+        <view class="annual-value">
+            <text class="annual-unit">{{total.label}}</text>{{total.value}}元
+        </view>
+    </view>
+</view>

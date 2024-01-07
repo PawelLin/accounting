@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "年账单",
+    "usingComponents": {
+        "skew-bar": "../../components/skew-bar"
+    }
+}

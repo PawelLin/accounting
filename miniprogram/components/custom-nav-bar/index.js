@@ -38,6 +38,11 @@ Component({
             this.setData({
                 theme
             })
+        },
+        onYear () {
+            wx.navigateTo({
+                url: '/pages/annual/annual',
+            })
         }
     }
 })

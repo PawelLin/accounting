@@ -6,4 +6,5 @@ module.exports = {
     updateBill: require('./updateBill').default,
     getLabel: require('./getLabel').default,
     addLabel: require('./addLabel').default,
+    deleteBill: require('./deleteBill').default
 }

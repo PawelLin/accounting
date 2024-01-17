@@ -18,7 +18,9 @@ export default params => {
                         date: `${dateStr}-${day}`,
                         label,
                         labelTitle,
-                        type: '0'
+                        type: '0',
+                        time: Math.random(),
+                        _id: `pay${index}`
                     }
                 }),
                 ...incomeLabels.length ? Array.from(Array(100)).map((item, index) => {
@@ -30,7 +32,9 @@ export default params => {
                         date: `${dateStr}-${day}`,
                         label,
                         labelTitle,
-                        type: '1'
+                        type: '1',
+                        time: Math.random(),
+                        _id: `income${index}`
                     }
                 }) : []
             ],

@@ -10,11 +10,11 @@
             </picker>
             <view class="header-item header-pay">
                 <view class="header-title">支出</view>
-                <view class="header-amount account-green">{{payNumber}}</view>
+                <view class="header-amount account-green">{{payNumberStr}}</view>
             </view>
             <view class="header-item header-income">
                 <view class="header-title">收入</view>
-                <view class="header-amount account-red">{{incomeNumber}}</view>
+                <view class="header-amount account-red">{{incomeNumberStr}}</view>
             </view>
         </view>
     </view>
@@ -27,13 +27,19 @@
                     <view>{{item.amount < 0 ? '支出' : '收入'}}: {{item.amount}}</view>
                 </view>
                 <view class="account-contain">
-                    <view wx:for="{{item.list}}" wx:key="time" class="account-item">
+                    <view wx:for="{{item.list}}" wx:key="time" class="account-item {{touchItemTime === item.time ? 'account-item-slide' : ''}}"
+                        bindtouchstart="onTouchstart"
+                        bindtouchmove="onTouchmove"
+                        bindtouchend="onTouchend"
+                        data-time="{{item.time}}"
+                    >
                         <picker value="{{item.labelIndex}}" range="{{item.labelList}}" range-key="title"
                             data-pindex="{{pindex}}" data-index="{{index}}" bindchange="bindLabelChange">
                             <view>{{item.labelTitle}}</view>
                         </picker>
                         <view wx:if="{{item.type === '0'}}" class="account-green">{{-item.amount}}</view>
                         <view wx:else class="account-red">{{item.amount}}</view>
+                        <view class="account-delete" data-pindex="{{pindex}}" data-index="{{index}}" bindtap="bindBillDelete">删除</view>
                     </view>
                 </view>
             </view>

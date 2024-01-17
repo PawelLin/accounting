@@ -63,6 +63,7 @@ page {
     border-radius: 10px;
     box-shadow: var(--soft-box-shadow);
     transition: box-shadow var(--theme-switch-duration) var(--theme-switch-timing-function);
+    overflow: hidden;
 }
 .account + .account {
     margin-top: 10px;
@@ -75,14 +76,23 @@ page {
     font-size: 15px;
 }
 .account-item {
+    position: relative;
     margin-top: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: transform .15s ease-in-out;
+}
+.account-item-slide {
+    transform: translateX(-42px) translateZ(0);
 }
 .account-red {
     color: var(--red-color);
 }
 .account-green {
     color: var(--green-color);
+}
+.account-delete {
+    position: absolute;
+    right: -42px;
 }

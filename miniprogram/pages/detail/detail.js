@@ -6,8 +6,10 @@ Page({
         theme: app.globalData.theme,
         loading: true,
         list: [],
-        payNumber: '0',
-        incomeNumber: '0',
+        payNumber: 0,
+        payNumberStr: '0',
+        incomeNumber: 0,
+        incomeNumberStr: '0',
         pickData: {
             date: '',
             year: '',
@@ -16,6 +18,7 @@ Page({
         labelList: [],
         payLabelList: null,
         incomeLabelList: null,
+        touchItemTime: ''
     },
     onLoad() {
         this.init()
@@ -98,8 +101,10 @@ Page({
                 incomeNumber = util.numberAddition(incomeNumber, income)
             })
             this.setData({
-                payNumber: util.formatAmount(payNumber),
-                incomeNumber: util.formatAmount(incomeNumber),
+                payNumber: payNumber,
+                payNumberStr: util.formatAmount(payNumber),
+                incomeNumber: incomeNumber,
+                incomeNumberStr: util.formatAmount(incomeNumber),
                 list: result,
                 loading: false
             })
@@ -127,8 +132,66 @@ Page({
             })
         }
     },
+    async bindBillDelete (e) {
+        const { pindex, index } = e.currentTarget.dataset
+        const pitem = this.data.list[pindex]
+        const item = pitem.list[index]
+        cloud.callFunction({
+            name: 'deleteBill',
+            data: {
+                id: item._id
+            }
+        }).then(() => {
+            pitem.list.splice(index, 1)
+            const isPay = item.type === '0'
+            const amount = isPay ? item.amount : -item.amount
+            const numberKey = isPay ? 'payNumber' : 'incomeNumber'
+            const numberValue = util.numberSubtract(this.data[numberKey], item.amount)
+            const isClear = !pitem.list.length
+            if (isClear) {
+                this.data.list.splice(pindex, 1)
+            }
+            this.setData({
+                ...(isClear ? {
+                    list: this.data.list
+                } : {
+                    [`list[${pindex}].amount`]: util.numberAddition(pitem.amount, amount),
+                    [`list[${pindex}].list`]: pitem.list,
+                }),
+                [numberKey]: numberValue,
+                [`${numberKey}Str`]: util.formatAmount(numberValue)
+            })
+        })
+    },
     init (reInit) {
         const date = util.formatDate(new Date(), 'yyyy-MM')
         this.setPickData(date, reInit)
     },
+    onTouchstart (e) {
+        this.onTouch = true
+        this.touchstartX = e.touches[0].pageX
+        this.touchDistance = 0
+        this.touchTime = Date.now()
+    },
+    onTouchmove (e) {
+        if (this.onTouch) {
+            this.touchDistance = e.touches[0].pageX - this.touchstartX
+        }
+    },
+    onTouchend (e) {
+        this.onTouch = false
+        this.touchTime -= Date.now()
+        if (this.touchTime > -200) {
+            if (this.touchDistance < -10) {
+                this.setData({
+                    touchItemTime: e.currentTarget.dataset.time
+                })
+            }
+            if (this.touchDistance > 10) {
+                this.setData({
+                    touchItemTime: ''
+                })
+            }
+        }
+    }
 })
